@@ -6,9 +6,7 @@
   <title>Boujee Sports — Admin Dashboard</title>
   <meta name="description" content="Admin dashboard for Boujee Sports">
   <link rel="icon" href="sports.png">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -25,7 +23,7 @@
       padding-bottom: 95px;
     }
     .container {
-      max-width: 900px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 16px;
     }
@@ -34,7 +32,6 @@
       letter-spacing: 0.4px;
     }
 
-    /* TOP BAR - fixed height, full height dropdown */
     .topbar {
       background: #111111;
       border-bottom: 1px solid #242424;
@@ -65,13 +62,12 @@
       color: #fff;
     }
 
-    /* DROPDOWN - full height */
     .dropdown {
       position: relative;
       height: 100%;
       display: flex;
       align-items: center;
-      display: none; /* initially hidden, shown when admin */
+      display: none;
     }
     .dropdown-btn {
       background: transparent;
@@ -92,9 +88,6 @@
       background: #1a1a1a;
       color: #fff;
     }
-    .dropdown-btn i {
-      font-size: 1.2rem;
-    }
     .dropdown-content {
       display: none;
       position: absolute;
@@ -106,15 +99,13 @@
       z-index: 200;
       box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     }
-    .dropdown-content.show {
-      display: block;
-    }
+    .dropdown-content.show { display: block; }
     .dropdown-item {
       color: #f7f7f7;
-      padding: 14px 20px;
+      padding: 16px 20px;
       text-decoration: none;
       display: block;
-      font-size: 0.95rem;
+      font-size: 1rem;
       border-bottom: 1px solid #1a1a1a;
       cursor: pointer;
     }
@@ -122,13 +113,8 @@
       background: #1a1a1a;
       color: #ef1b2d;
     }
-    .dropdown-item i {
-      margin-right: 8px;
-      width: 16px;
-      text-align: center;
-    }
+    .dropdown-item i { margin-right: 8px; }
 
-    /* AUTH CARD */
     .auth-card {
       background: #111111;
       border: 1px solid #242424;
@@ -176,9 +162,7 @@
       color: #ef1b2d;
       border-bottom: 2px solid #ef1b2d;
     }
-    .form-group {
-      margin-bottom: 20px;
-    }
+    .form-group { margin-bottom: 20px; }
     .form-group label {
       display: block;
       margin-bottom: 8px;
@@ -202,9 +186,7 @@
     }
     .form-group input:focus,
     .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: #ef1b2d;
-    }
+    .form-group textarea:focus { border-color: #ef1b2d; }
     .form-group select {
       appearance: none;
       background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239a9a9a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -212,8 +194,22 @@
       background-position: right 14px center;
       background-size: 16px;
     }
+    .form-group input[type="checkbox"] {
+      width: auto;
+      padding: 0;
+      margin-right: 8px;
+      accent-color: #ef1b2d;
+    }
+    .inline-check {
+      display: flex;
+      align-items: center;
+      color: #f7f7f7;
+      font-size: 1rem;
+      text-transform: none;
+      letter-spacing: normal;
+      cursor: pointer;
+    }
 
-    /* Buttons */
     .btn {
       background: #ef1b2d;
       color: white;
@@ -230,10 +226,9 @@
       align-items: center;
       gap: 8px;
     }
-    .btn:hover {
-      background: #d01526;
-    }
-    .btn-green { background: #2cd07e; border-color: #2cd07e; }
+    .btn:hover { background: #d01526; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-green { background: #2cd07e; border-color: #2cd07e; color: #052612; }
     .btn-green:hover { background: #24b06a; }
     .btn-red { background: #ff4444; border-color: #ff4444; }
     .btn-red:hover { background: #e03333; }
@@ -242,28 +237,19 @@
       border-color: #ef1b2d;
       color: #ef1b2d;
     }
-    .btn-outline:hover {
-      background: #ef1b2d;
-      color: white;
-    }
+    .btn-outline:hover { background: #ef1b2d; color: white; }
     .btn-sm {
       padding: 6px 12px;
       font-size: 0.85rem;
     }
 
-    /* Alerts */
-    .alert {
-      padding: 12px 16px;
-      margin: 16px 0;
-      font-size: 0.9rem;
-    }
+    .alert { padding: 12px 16px; margin: 16px 0; font-size: 0.9rem; }
     .alert-error { background: #2a0a0a; border-left: 3px solid #ef1b2d; color: #ff4444; }
     .alert-success { background: #0a2a0a; border-left: 3px solid #2cd07e; color: #2cd07e; }
+    .alert-info { background: #0a1628; border-left: 3px solid #2f7dd8; color: #5aa8f0; }
 
-    /* Hidden */
-    .hidden { display: none; }
+    .hidden { display: none !important; }
 
-    /* Skeleton */
     .skeleton {
       background: #1e1e1e;
       position: relative;
@@ -281,7 +267,6 @@
       100% { transform: translateX(100%); }
     }
 
-    /* Sections */
     .section {
       padding: 24px 0;
       border-bottom: 1px solid #242424;
@@ -297,14 +282,12 @@
       letter-spacing: 0.6px;
       color: #ef1b2d;
     }
-    .table-wrapper {
-      overflow-x: auto;
+    .section-header .header-actions {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
     }
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 600px;
-    }
+    .table { width: 100%; border-collapse: collapse; }
     .table th {
       text-align: left;
       color: #aaa;
@@ -312,79 +295,181 @@
       padding: 12px 6px;
       text-transform: uppercase;
       font-size: 0.8rem;
+      white-space: nowrap;
     }
     .table td {
       padding: 14px 6px;
       border-bottom: 1px solid #1b1b1b;
       font-size: 0.9rem;
+      vertical-align: middle;
     }
+    .table-wrap { overflow-x: auto; }
     .card {
       background: #111111;
       padding: 20px;
       border-left: 4px solid #ef1b2d;
       margin-bottom: 20px;
     }
-
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-    .stat-card {
-      background: #111111;
-      border: 1px solid #242424;
-      padding: 16px;
-    }
-    .stat-card h4 {
-      color: #9a9a9a;
-      font-size: 0.85rem;
+    .card h3 {
+      margin-bottom: 12px;
+      color: #ef1b2d;
+      font-size: 1.3rem;
       text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .stat-card .val {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #fff;
-      font-family: 'Barlow Condensed', sans-serif;
     }
 
-    /* Filters / search row */
-    .filter-row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .filter-row input, .filter-row select {
-      flex: 1;
-      min-width: 140px;
+    .pill-green { background: #0a2a0a; color: #2cd07e; }
+    .pill-red { background: #2a0a0a; color: #ff4444; }
+    .pill-yellow { background: #2a220a; color: #ffc02a; }
+    .pill-gray { background: #1e1e1e; color: #9a9a9a; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    .leg-row, .code-row {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .leg-row {
+      grid-template-columns: 1fr 1fr 1fr 90px 40px;
+    }
+    .code-row {
+      grid-template-columns: 130px 1fr;
+    }
+    @media (max-width: 640px) {
+      .leg-row {
+        grid-template-columns: 1fr 1fr;
+      }
+      .leg-row .leg-remove { grid-column: 1 / -1; justify-self: end; }
+    }
+    .leg-row input, .code-row input {
+      width: 100%;
       padding: 10px;
       background: #1a1a1a;
       border: 1px solid #2a2a2a;
       color: #fff;
       font-size: 0.9rem;
     }
-
-    /* Legs builder inside Ticket Creator */
-    .leg-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 100px 50px;
-      gap: 8px;
-      margin-bottom: 10px;
+    .leg-row input:focus, .code-row input:focus { border-color: #ef1b2d; outline: none; }
+    .leg-remove, .icon-btn {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      color: #ff4444;
+      padding: 10px;
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
     }
-    @media(max-width: 768px) {
-      .leg-row {
-        grid-template-columns: 1fr;
-        background: #151515;
-        padding: 12px;
-        border: 1px solid #222;
-      }
+    .leg-remove:hover, .icon-btn:hover { background: #2a0a0a; }
+
+    .table-builder-btn {
+      background: #1a1a1a;
+      border: 1px solid #ef1b2d;
+      color: #ef1b2d;
+      padding: 10px 16px;
+      margin-right: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-family: 'Barlow Condensed', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95rem;
+    }
+    .table-builder-btn:hover { background: #ef1b2d; color: #fff; }
+
+    .image-upload-btn {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      color: #fff;
+      padding: 10px 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .image-upload-btn:hover { background: #2a2a2a; }
+    .image-preview {
+      max-width: 120px;
+      height: auto;
+      margin-top: 12px;
+      display: none;
+      border: 1px solid #242424;
     }
 
-    /* Bottom nav */
+    .stat-card {
+      background: #111111;
+      border-left: 4px solid #ef1b2d;
+      padding: 16px;
+    }
+    .stat-card .label {
+      color: #9a9a9a;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stat-card .value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-bar input, .filter-bar select {
+      padding: 10px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    .filter-bar input:focus, .filter-bar select:focus { border-color: #ef1b2d; outline: none; }
+
+    .team-result {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #1b1b1b;
+    }
+    .team-result img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      background: #1a1a1a;
+    }
+    .team-result .name { flex: 1; font-size: 0.95rem; }
+    .team-result .meta { color: #9a9a9a; font-size: 0.8rem; }
+
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -406,12 +491,8 @@
       text-decoration: none;
       gap: 6px;
     }
-    .nav-item i {
-      font-size: 1.5rem;
-    }
-    .nav-item:hover, .active {
-      color: #ef1b2d;
-    }
+    .nav-item i { font-size: 1.5rem; }
+    .nav-item:hover, .active { color: #ef1b2d; }
     footer {
       text-align: center;
       padding: 30px 12px 120px;
@@ -419,9 +500,21 @@
       border-top: 1px solid #242424;
       font-size: 0.9rem;
     }
-    footer a {
-      color: #f7f7f7;
+    footer a { color: #f7f7f7; }
+
+    .code-chip {
+      display: inline-block;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      padding: 2px 6px;
+      margin: 2px 4px 2px 0;
+      font-size: 0.75rem;
+      font-family: monospace;
+      color: #fff;
     }
+    .mono { font-family: monospace; font-size: 0.82rem; word-break: break-all; }
+    .muted { color: #9a9a9a; }
+    .small { font-size: 0.8rem; }
   </style>
 </head>
 <body>
@@ -432,30 +525,24 @@
       <img src="sports.png" alt="logo">
       <span class="nav-brand">Boujee</span>
     </div>
-    <div class="dropdown" id="adminDropdown" style="display:none;">
+    <div class="dropdown" id="adminDropdown">
       <button class="dropdown-btn" id="dropdownBtn">
         <i class="fa-solid fa-user-shield"></i> Admin <i class="fa-solid fa-chevron-down"></i>
       </button>
       <div class="dropdown-content" id="dropdownContent">
-        <!-- Original tabs -->
-        <a class="dropdown-item" data-section="payments"><i class="fa-solid fa-credit-card"></i> Payments (Legacy)</a>
-        <a class="dropdown-item" data-section="withdrawals"><i class="fa-solid fa-money-bill-transfer"></i> Withdrawals</a>
-        <a class="dropdown-item" data-section="members"><i class="fa-solid fa-users"></i> Members</a>
-        <a class="dropdown-item" data-section="testimonies"><i class="fa-solid fa-comment-dots"></i> Testimonies</a>
-        <a class="dropdown-item" data-section="posts"><i class="fa-solid fa-newspaper"></i> Posts</a>
-        <!-- New worker backend features -->
-        <a class="dropdown-item" data-section="workerTickets"><i class="fa-solid fa-ticket"></i> Manage Tickets</a>
-        <a class="dropdown-item" data-section="workerBuyers"><i class="fa-solid fa-wallet"></i> Pass Buyers &amp; Grants</a>
-        <a class="dropdown-item" data-section="workerSms"><i class="fa-solid fa-comments"></i> SMS Queue</a>
-        <a class="dropdown-item" data-section="workerBookmakers"><i class="fa-solid fa-book-bookmark"></i> Bookmakers</a>
-        <a class="dropdown-item" data-section="workerSettings"><i class="fa-solid fa-gear"></i> System Settings</a>
+        <a class="dropdown-item" data-section="tickets"><i class="fa-solid fa-ticket"></i> Tickets</a>
+        <a class="dropdown-item" data-section="buyers"><i class="fa-solid fa-users"></i> Buyers</a>
+        <a class="dropdown-item" data-section="sms"><i class="fa-solid fa-comment-sms"></i> SMS Queue</a>
+        <a class="dropdown-item" data-section="settings"><i class="fa-solid fa-gear"></i> Settings</a>
+        <a class="dropdown-item" data-section="bookmakers"><i class="fa-solid fa-book"></i> Bookmakers</a>
+        <a class="dropdown-item" data-section="teams"><i class="fa-solid fa-shield-halved"></i> Team Logos</a>
         <a class="dropdown-item" id="logoutBtn"><i class="fa-solid fa-sign-out-alt"></i> Log out</a>
       </div>
     </div>
   </div>
 
   <div class="container">
-    <!-- AUTH CARD (visible when not logged in) -->
+    <!-- AUTH CARD -->
     <div id="authCard" class="auth-card hidden">
       <div class="auth-header">
         <img src="sports.png" alt="Boujee Sports">
@@ -467,315 +554,329 @@
       </div>
       <div id="authAlert" class="alert hidden"></div>
 
-      <!-- Login Form -->
       <form id="loginForm">
         <div class="form-group">
           <label>Email</label>
-          <input type="email" id="loginEmail" required placeholder="you@example.com">
+          <input type="email" id="loginEmail" required placeholder="you@example.com" autocomplete="email">
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="loginPassword" required placeholder="Your password">
-        </div>
-        <!-- Optional claim code field -->
-        <div class="form-group">
-          <label>Admin Claim Code (optional - only if first time)</label>
-          <input type="text" id="loginClaimCode" placeholder="Enter claim code to become admin">
+          <input type="password" id="loginPassword" required placeholder="Your password" autocomplete="current-password">
         </div>
         <button type="submit" class="btn" style="width:100%;"><i class="fa-solid fa-sign-in-alt"></i> Sign In</button>
       </form>
 
-      <!-- Register Form -->
       <form id="registerForm" style="display:none;">
         <div class="form-group">
           <label>Email</label>
-          <input type="email" id="registerEmail" required placeholder="you@example.com">
+          <input type="email" id="registerEmail" required placeholder="you@example.com" autocomplete="email">
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="registerPassword" required placeholder="Minimum 6 characters">
+          <input type="password" id="registerPassword" required placeholder="Minimum 6 characters" autocomplete="new-password">
         </div>
         <div class="form-group">
           <label>Confirm Password</label>
-          <input type="password" id="confirmPassword" required placeholder="Re-enter password">
+          <input type="password" id="confirmPassword" required placeholder="Re-enter password" autocomplete="new-password">
         </div>
         <button type="submit" class="btn" style="width:100%;"><i class="fa-solid fa-user-plus"></i> Register</button>
       </form>
     </div>
 
-    <!-- CLAIM FORM (visible when logged in but not admin) -->
-    <div id="claimSection" class="section hidden">
-      <div class="section-header"><i class="fa-solid fa-key"></i> Admin Claim</div>
-      <div class="card">
-        <p style="color:#9a9a9a;margin-bottom:16px;">Enter the one-time admin claim code to gain access.</p>
-        <div class="form-group">
-          <input type="text" id="claimCode" placeholder="Admin claim code">
-        </div>
-        <button class="btn" id="claimBtn"><i class="fa-solid fa-unlock"></i> Claim Admin</button>
-        <div id="claimAlert" class="alert hidden"></div>
+    <!-- UNAUTHORIZED PANEL -->
+    <div id="unauthorizedCard" class="auth-card hidden">
+      <div class="auth-header">
+        <img src="sports.png" alt="Boujee Sports">
+        <h1>Access Denied</h1>
       </div>
+      <div class="alert alert-error">
+        Unauthorized Admin UID. Your Firebase account is not in the admin allow-list.
+        Contact the system owner to have your UID added.
+      </div>
+      <p class="muted small" style="margin:12px 0;">UID: <span id="unauthUid" class="mono"></span></p>
+      <button class="btn btn-outline" id="unauthLogoutBtn" style="width:100%;">
+        <i class="fa-solid fa-sign-out-alt"></i> Sign Out
+      </button>
     </div>
 
-    <!-- ADMIN DASHBOARD (visible if admin) -->
+    <!-- ADMIN DASHBOARD -->
     <div id="adminDashboard" class="hidden">
-      
-      <!-- PAYMENTS SECTION (LEGACY) -->
-      <section id="paymentsSection" class="section">
-        <div class="section-header"><i class="fa-solid fa-credit-card"></i> Pending Payments</div>
-        <div id="paymentsTableContainer">
-          <div class="skeleton" style="height:100px;"></div>
-        </div>
-      </section>
 
-      <!-- WITHDRAWALS SECTION -->
-      <section id="withdrawalsSection" class="section hidden">
-        <div class="section-header"><i class="fa-solid fa-money-bill-transfer"></i> Pending Withdrawals</div>
-        <div id="withdrawalsTableContainer">
-          <div class="skeleton" style="height:100px;"></div>
+      <!-- TICKETS -->
+      <section id="ticketsSection" class="section">
+        <div class="section-header">
+          <i class="fa-solid fa-ticket"></i> Tickets
         </div>
-      </section>
 
-      <!-- MEMBERS SECTION -->
-      <section id="membersSection" class="section hidden">
-        <div class="section-header"><i class="fa-solid fa-users"></i> Member Management</div>
         <div class="card">
-          <h3 style="margin-bottom:12px;color:#ef1b2d;">Grant / Revoke Membership</h3>
-          <div class="form-group">
-            <label>User UID</label>
-            <input type="text" id="memberUid" placeholder="e.g. abc123...">
-          </div>
-          <div style="display:flex;gap:12px;">
-            <button class="btn btn-green" id="grantBtn"><i class="fa-solid fa-check"></i> Grant 30 days</button>
-            <button class="btn btn-red" id="revokeBtn"><i class="fa-solid fa-ban"></i> Revoke</button>
-          </div>
-        </div>
-        <div class="card">
-          <h3 style="margin-bottom:12px;color:#ef1b2d;">Delete User</h3>
-          <div class="form-group">
-            <label>User UID</label>
-            <input type="text" id="deleteUid" placeholder="e.g. abc123...">
-          </div>
-          <button class="btn btn-red" id="deleteUserBtn"><i class="fa-solid fa-trash"></i> Delete Account</button>
-        </div>
-        <div id="membersAlert" class="alert hidden"></div>
-      </section>
-
-      <!-- TESTIMONIES SECTION -->
-      <section id="testimoniesSection" class="section hidden">
-        <div class="section-header"><i class="fa-solid fa-comment-dots"></i> Pending Testimonies</div>
-        <div id="testimoniesTableContainer">
-          <div class="skeleton" style="height:100px;"></div>
-        </div>
-      </section>
-
-      <!-- POSTS SECTION -->
-      <section id="postsSection" class="section hidden">
-        <div class="section-header"><i class="fa-solid fa-newspaper"></i> Manage Posts</div>
-        <div class="card">
-          <h3 style="margin-bottom:16px;color:#ef1b2d;">Create New Post</h3>
-          <form id="createPostForm">
-            <div class="form-group">
-              <label>Post Type</label>
-              <select id="postType">
-                <option value="pick">Pick</option>
-                <option value="table">Table</option>
-                <option value="update">Update</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Tier</label>
-              <select id="postTier">
-                <option value="free">Free</option>
-                <option value="paid">Paid</option>
-              </select>
-            </div>
-            <div class="form-group" id="bodyTextGroup">
-              <label>Body (Text)</label>
-              <textarea id="postBody" rows="4" placeholder="Post content..."></textarea>
-            </div>
-            <button type="submit" class="btn"><i class="fa-solid fa-plus"></i> Create Post</button>
-          </form>
-        </div>
-        <div id="postsAlert" class="alert hidden"></div>
-      </section>
-
-      <!-- ================= WORKER BACKEND FEATURES ================= -->
-
-      <!-- WORKER TICKETS MANAGEMENT -->
-      <section id="workerTicketsSection" class="section hidden">
-        <div class="section-header"><i class="fa-solid fa-ticket"></i> Worker Tipping Tickets</div>
-        
-        <div class="card">
-          <h3 style="margin-bottom:16px;color:#ef1b2d;" id="ticketFormTitle">Create New Ticket</h3>
-          <form id="workerTicketForm">
-            <input type="hidden" id="editTicketId">
-            <div class="form-group">
-              <label>Sport</label>
-              <select id="ticketSport">
-                <option value="football">Football</option>
-                <option value="basketball">Basketball</option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-              <label>Match Legs</label>
-              <div id="ticketLegsContainer">
-                <!-- Dynamic leg rows injected here -->
+          <h3 id="ticketFormTitle">Create Ticket</h3>
+          <form id="ticketForm">
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Sport</label>
+                <select id="ticketSport" required>
+                  <option value="football">Football</option>
+                  <option value="basketball">Basketball</option>
+                </select>
               </div>
-              <button type="button" class="btn btn-outline btn-sm" id="addLegBtn" style="margin-top:8px;"><i class="fa-solid fa-plus"></i> Add Leg</button>
-            </div>
-
-            <div class="form-group">
-              <label>Bookmaker Booking Codes (JSON / Key-Value)</label>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                <input type="text" id="codeSportpesa" placeholder="Sportpesa Code">
-                <input type="text" id="codeBetway" placeholder="Betway Code">
-                <input type="text" id="codeFortebet" placeholder="Fortebet Code">
-                <input type="text" id="codeAirtel" placeholder="Other Code">
+              <div class="form-group">
+                <label>Total Odds (auto)</label>
+                <input type="text" id="totalOddsPreview" readonly value="1.00" style="color:#2cd07e;font-weight:700;">
               </div>
             </div>
 
             <div class="form-group">
-              <label>Published Status</label>
-              <select id="ticketPublished">
-                <option value="1">Published (Visible to active passes)</option>
-                <option value="0">Draft / Hidden</option>
-              </select>
+              <label>Legs</label>
+              <div id="legsContainer"></div>
+              <button type="button" class="table-builder-btn" id="addLegBtn">
+                <i class="fa-solid fa-plus"></i> Add Leg
+              </button>
             </div>
 
-            <button type="submit" class="btn"><i class="fa-solid fa-save"></i> Save Ticket</button>
-            <button type="button" class="btn btn-outline hidden" id="cancelTicketEditBtn" style="margin-left:8px;">Cancel</button>
+            <div class="form-group">
+              <label>Bookmaker Codes (optional)</label>
+              <div id="codesContainer">
+                <p class="muted small">Loading bookmakers...</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="inline-check">
+                <input type="checkbox" id="ticketPublished" checked> Published
+              </label>
+            </div>
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="submit" class="btn" id="saveTicketBtn">
+                <i class="fa-solid fa-save"></i> Save Ticket
+              </button>
+              <button type="button" class="btn btn-outline hidden" id="cancelEditBtn">
+                Cancel
+              </button>
+            </div>
           </form>
+          <div id="ticketAlert" class="alert hidden"></div>
         </div>
 
-        <div class="card">
-          <h3 style="margin-bottom:12px;color:#ef1b2d;">Existing Active Tickets</h3>
-          <div id="workerTicketsListContainer" class="table-wrapper">
-            <div class="skeleton" style="height:80px;"></div>
-          </div>
+        <div class="section-header" style="font-size:1.4rem;">
+          <i class="fa-solid fa-list"></i> Existing Tickets
+        </div>
+        <div id="ticketsListContainer">
+          <div class="skeleton" style="height:100px;"></div>
         </div>
       </section>
 
-      <!-- WORKER BUYERS & PASS GRANTS -->
-      <section id="workerBuyersSection" class="section hidden">
-        <div class="section-header"><i class="fa-solid fa-wallet"></i> Passes &amp; Buyer Transactions</div>
-        
-        <div class="stats-grid">
+      <!-- BUYERS -->
+      <section id="buyersSection" class="section hidden">
+        <div class="section-header">
+          <i class="fa-solid fa-users"></i> Buyers & Passes
+        </div>
+
+        <div class="grid-2" style="margin-bottom:20px;">
           <div class="stat-card">
-            <h4>Today's Revenue</h4>
-            <div class="val" id="statTodayTotal">UGX 0</div>
-            <small style="color:#8a8a8a;" id="statTodayCount">0 passes sold</small>
+            <div class="label">Today</div>
+            <div class="value" id="statToday">—</div>
+            <div class="muted small" id="statTodayTotal">—</div>
           </div>
           <div class="stat-card">
-            <h4>All-Time Revenue</h4>
-            <div class="val" id="statAllTotal">UGX 0</div>
-            <small style="color:#8a8a8a;" id="statAllCount">0 passes sold</small>
+            <div class="label">All Time</div>
+            <div class="value" id="statAll">—</div>
+            <div class="muted small" id="statAllTotal">—</div>
           </div>
         </div>
 
         <div class="card">
-          <h3 style="margin-bottom:12px;color:#ef1b2d;">Manually Grant Pass</h3>
-          <div class="form-group">
-            <label>Ugandan Phone Number</label>
-            <input type="text" id="grantPhoneInput" placeholder="0772123456 or 256772...">
+          <h3>Grant Manual Pass</h3>
+          <form id="grantForm">
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="grantPhone" placeholder="0772123456" required>
+              </div>
+              <div class="form-group" style="display:flex;align-items:flex-end;">
+                <button type="submit" class="btn btn-green" style="width:100%;">
+                  <i class="fa-solid fa-check"></i> Grant Pass
+                </button>
+              </div>
+            </div>
+          </form>
+          <div id="grantAlert" class="alert hidden"></div>
+          <div id="grantLinkBox" class="hidden" style="margin-top:8px;">
+            <p class="muted small">Pass link (also SMS-queued to buyer):</p>
+            <p class="mono" id="grantLink" style="word-break:break-all;color:#2cd07e;"></p>
           </div>
-          <button class="btn btn-green" id="manualGrantBtn"><i class="fa-solid fa-check"></i> Grant Pass &amp; SMS Link</button>
-          <div id="grantResultBox" style="margin-top:10px;word-break:break-all;"></div>
         </div>
 
         <div class="card">
-          <h3 style="margin-bottom:12px;color:#ef1b2d;">Buyer Orders Search</h3>
-          <div class="filter-row">
-            <input type="text" id="buyerSearchPhone" placeholder="Filter by phone...">
-            <select id="buyerSearchStatus">
-              <option value="">All Statuses</option>
-              <option value="paid">Paid</option>
-              <option value="pending">Pending</option>
-              <option value="failed">Failed</option>
-            </select>
-            <input type="date" id="buyerSearchDate">
-            <button class="btn" id="buyerSearchFilterBtn">Filter</button>
-          </div>
-          <div id="workerBuyersTableContainer" class="table-wrapper">
-            <div class="skeleton" style="height:100px;"></div>
-          </div>
+          <h3>Revoke Pass</h3>
+          <form id="revokeForm">
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Pass Code</label>
+                <input type="text" id="revokeCode" placeholder="Paste pass code" required>
+              </div>
+              <div class="form-group" style="display:flex;align-items:flex-end;">
+                <button type="submit" class="btn btn-red" style="width:100%;">
+                  <i class="fa-solid fa-ban"></i> Revoke
+                </button>
+              </div>
+            </div>
+          </form>
+          <div id="revokeAlert" class="alert hidden"></div>
+        </div>
+
+        <div class="filter-bar">
+          <input type="text" id="buyerSearch" placeholder="Search phone...">
+          <input type="date" id="buyerDate">
+          <select id="buyerStatus">
+            <option value="">All statuses</option>
+            <option value="paid">Paid</option>
+            <option value="pending">Pending</option>
+            <option value="failed">Failed</option>
+          </select>
+          <button type="button" class="btn btn-sm" id="buyerRefreshBtn">
+            <i class="fa-solid fa-rotate"></i> Refresh
+          </button>
+        </div>
+
+        <div id="buyersListContainer">
+          <div class="skeleton" style="height:100px;"></div>
         </div>
       </section>
 
-      <!-- WORKER SMS QUEUE -->
-      <section id="workerSmsSection" class="section hidden">
-        <div class="section-header"><i class="fa-solid fa-comments"></i> SMS Dispatch Queue</div>
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-            <h3 style="color:#ef1b2d;">Africa's Talking Logs</h3>
-            <button class="btn btn-sm" id="forceFlushSmsBtn"><i class="fa-solid fa-paper-plane"></i> Force Flush Queue Now</button>
+      <!-- SMS QUEUE -->
+      <section id="smsSection" class="section hidden">
+        <div class="section-header">
+          <i class="fa-solid fa-comment-sms"></i> SMS Queue
+          <div class="header-actions">
+            <button class="btn btn-sm" id="smsSendAllBtn">
+              <i class="fa-solid fa-paper-plane"></i> Send Now
+            </button>
+            <button class="btn btn-sm btn-outline" id="smsRefreshBtn">
+              <i class="fa-solid fa-rotate"></i> Refresh
+            </button>
           </div>
-          <div id="workerSmsTableContainer" class="table-wrapper">
-            <div class="skeleton" style="height:100px;"></div>
-          </div>
+        </div>
+        <div id="smsWindowStatus" class="alert alert-info hidden"></div>
+        <div id="smsListContainer">
+          <div class="skeleton" style="height:100px;"></div>
         </div>
       </section>
 
-      <!-- WORKER BOOKMAKERS -->
-      <section id="workerBookmakersSection" class="section hidden">
-        <div class="section-header"><i class="fa-solid fa-book-bookmark"></i> Bookmakers Configuration</div>
+      <!-- SETTINGS -->
+      <section id="settingsSection" class="section hidden">
+        <div class="section-header">
+          <i class="fa-solid fa-gear"></i> Global Settings
+        </div>
         <div class="card">
-          <h3 style="margin-bottom:16px;color:#ef1b2d;">Add Bookmaker</h3>
+          <form id="settingsForm">
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Tickets to Show (1-200)</label>
+                <input type="number" id="setTicketsToShow" min="1" max="200" required>
+              </div>
+              <div class="form-group">
+                <label>Price (UGX, 100-1000000)</label>
+                <input type="number" id="setPrice" min="100" max="1000000" required>
+              </div>
+              <div class="form-group">
+                <label>Pass Hours (1-720)</label>
+                <input type="number" id="setPassHours" min="1" max="720" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>SMS Template (must contain {link}, max 300 chars)</label>
+              <textarea id="setSmsTemplate" rows="3" required></textarea>
+              <p class="muted small" style="margin-top:6px;">Placeholders: <span class="mono">{link}</span> <span class="mono">{hours}</span></p>
+            </div>
+            <div class="form-group">
+              <label>Disclaimer (max 300 chars)</label>
+              <textarea id="setDisclaimer" rows="2" required></textarea>
+            </div>
+            <button type="submit" class="btn" id="saveSettingsBtn">
+              <i class="fa-solid fa-save"></i> Save Settings
+            </button>
+          </form>
+          <div id="settingsAlert" class="alert hidden"></div>
+        </div>
+      </section>
+
+      <!-- BOOKMAKERS -->
+      <section id="bookmakersSection" class="section hidden">
+        <div class="section-header">
+          <i class="fa-solid fa-book"></i> Bookmakers
+        </div>
+        <div class="card">
+          <h3 id="bookmakerFormTitle">Add Bookmaker</h3>
           <form id="bookmakerForm">
-            <div class="form-group">
-              <label>Name</label>
-              <input type="text" id="bmName" required placeholder="e.g. Betway">
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="bmName" required>
+              </div>
+              <div class="form-group">
+                <label>Sort Order</label>
+                <input type="number" id="bmSort" value="0">
+              </div>
             </div>
             <div class="form-group">
-              <label>Logo URL</label>
+              <label>Logo URL (optional)</label>
               <input type="text" id="bmLogo" placeholder="https://...">
             </div>
-            <div class="form-group">
-              <label>Sort Order</label>
-              <input type="number" id="bmSort" value="0">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="submit" class="btn" id="saveBookmakerBtn">
+                <i class="fa-solid fa-save"></i> Save
+              </button>
+              <button type="button" class="btn btn-outline hidden" id="cancelBookmakerBtn">Cancel</button>
             </div>
-            <button type="submit" class="btn"><i class="fa-solid fa-plus"></i> Add Bookmaker</button>
           </form>
+          <div id="bookmakerAlert" class="alert hidden"></div>
+        </div>
+        <div id="bookmakersListContainer">
+          <div class="skeleton" style="height:100px;"></div>
+        </div>
+      </section>
+
+      <!-- TEAMS -->
+      <section id="teamsSection" class="section hidden">
+        <div class="section-header">
+          <i class="fa-solid fa-shield-halved"></i> Team Logos
         </div>
         <div class="card">
-          <h3 style="margin-bottom:12px;color:#ef1b2d;">Configured Bookmakers</h3>
-          <div id="workerBookmakersList" class="table-wrapper">
-            <div class="skeleton" style="height:80px;"></div>
+          <div class="form-group">
+            <label>Search Team (2+ characters)</label>
+            <input type="text" id="teamSearch" placeholder="e.g. Arsenal, Lakers...">
           </div>
+          <div id="teamSearchAlert" class="alert hidden"></div>
+          <div id="teamSearchResults"></div>
         </div>
-      </section>
-
-      <!-- WORKER SETTINGS -->
-      <section id="workerSettingsSection" class="section hidden">
-        <div class="section-header"><i class="fa-solid fa-gear"></i> System Settings</div>
         <div class="card">
-          <form id="workerSettingsForm">
-            <div class="form-group">
-              <label>Tickets To Show On Frontend</label>
-              <input type="number" id="st_tickets_to_show">
+          <h3>Add Custom Team Logo</h3>
+          <form id="customTeamForm">
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Team Name</label>
+                <input type="text" id="customTeamName" required placeholder="Exact name used on tickets">
+              </div>
+              <div class="form-group">
+                <label>Logo Image</label>
+                <div>
+                  <button type="button" class="image-upload-btn" id="customTeamUploadBtn">
+                    <i class="fa-solid fa-upload"></i> Upload
+                  </button>
+                  <input type="file" id="customTeamFile" accept="image/*" style="display:none;">
+                </div>
+              </div>
             </div>
-            <div class="form-group">
-              <label>Pass Price (UGX)</label>
-              <input type="number" id="st_price">
-            </div>
-            <div class="form-group">
-              <label>Pass Duration (Hours)</label>
-              <input type="number" id="st_pass_hours">
-            </div>
-            <div class="form-group">
-              <label>SMS Template (must include {link})</label>
-              <textarea id="st_sms_template" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-              <label>Legal Disclaimer</label>
-              <textarea id="st_disclaimer" rows="2"></textarea>
-            </div>
-            <button type="submit" class="btn"><i class="fa-solid fa-save"></i> Save Settings</button>
+            <img id="customTeamPreview" class="image-preview" alt="Preview">
+            <input type="hidden" id="customTeamLogoUrl">
+            <button type="submit" class="btn" style="margin-top:12px;">
+              <i class="fa-solid fa-save"></i> Save Team
+            </button>
           </form>
-          <div id="settingsAlert" class="alert hidden" style="margin-top:12px;"></div>
+          <div id="customTeamAlert" class="alert hidden"></div>
         </div>
       </section>
-
     </div>
   </div>
 
@@ -788,21 +889,21 @@
   </nav>
 
   <footer>
-    <p><a href="/terms-policy.html">Terms &amp; Policy</a> · <a href="mailto:support@boujeesports.com">support@boujeesports.com</a></p>
-    <p style="margin:12px 0;">© 2026 Boujee Sports. All rights reserved.</p>
+    <p><a href="/terms-policy.html">Terms &amp; Policy</a></p>
+    <p style="margin:12px 0;">&copy; 2026 Boujee Sports. All rights reserved.</p>
   </footer>
 
-  <!-- FIREBASE & WORKER SCRIPT MODULE -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
-    import { 
-      getAuth, 
-      createUserWithEmailAndPassword, 
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
       signInWithEmailAndPassword,
-      onAuthStateChanged, 
-      signOut 
+      onAuthStateChanged,
+      signOut
     } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
 
+    // ============ CONFIG ============
     const firebaseConfig = {
       apiKey: "AIzaSyDtzlIfae9EjRZyaZZfndKTBFMuM8AJJcw",
       authDomain: "boujee-sports.firebaseapp.com",
@@ -814,540 +915,893 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // DOM elements
-    const adminDropdown = document.getElementById('adminDropdown');
-    const dropdownBtn = document.getElementById('dropdownBtn');
-    const dropdownContent = document.getElementById('dropdownContent');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const authCard = document.getElementById('authCard');
-    const claimSection = document.getElementById('claimSection');
-    const adminDashboard = document.getElementById('adminDashboard');
-    const authAlert = document.getElementById('authAlert');
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const claimBtn = document.getElementById('claimBtn');
-    const claimCode = document.getElementById('claimCode');
-    const claimAlert = document.getElementById('claimAlert');
+    // Worker base path (pathname.replace(/^\/api\/pass/, '') is what the Worker matches against)
+    const API = '/api/pass';
 
+    // ============ STATE ============
     let currentUser = null;
-    let pendingClaimCode = null;
+    let bookmakersCache = [];
+    let editingTicketId = null;
+    let editingBookmakerId = null;
+    let legs = []; // { home, away, pick, odds }
+    let codes = {}; // { bookmakerId: 'code' }
+    let currentSection = 'tickets';
 
-    // Tab switching for login/register
+    // ============ DOM REFS ============
+    const $ = (id) => document.getElementById(id);
+    const adminDropdown = $('adminDropdown');
+    const dropdownBtn = $('dropdownBtn');
+    const dropdownContent = $('dropdownContent');
+    const logoutBtn = $('logoutBtn');
+    const authCard = $('authCard');
+    const unauthorizedCard = $('unauthorizedCard');
+    const adminDashboard = $('adminDashboard');
+    const authAlert = $('authAlert');
+    const loginForm = $('loginForm');
+    const registerForm = $('registerForm');
+
+    // ============ HELPERS ============
+    function esc(s) {
+      return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function fmtDate(ms) {
+      if (!ms) return '—';
+      const d = new Date(ms);
+      return d.toLocaleString(undefined, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    }
+    function fmtShortDate(ms) {
+      if (!ms) return '—';
+      return new Date(ms).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' });
+    }
+    function fmtMoney(n) {
+      return 'UGX ' + Number(n || 0).toLocaleString();
+    }
+    function flashAlert(el, message, type) {
+      if (!el) return;
+      el.textContent = message;
+      el.className = 'alert alert-' + type;
+      el.classList.remove('hidden');
+      clearTimeout(el._t);
+      el._t = setTimeout(() => el.classList.add('hidden'), 5000);
+    }
+
+    // ============ API ============
+    async function api(path, options = {}) {
+      if (!currentUser) throw new Error('Not authenticated');
+      const token = await currentUser.getIdToken();
+      const headers = Object.assign({}, options.headers || {}, { 'Authorization': 'Bearer ' + token });
+      const res = await fetch(API + path, Object.assign({}, options, { headers }));
+      return res;
+    }
+
+    async function apiJson(path, options = {}) {
+      const res = await api(path, options);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || ('Request failed (' + res.status + ')'));
+      return data;
+    }
+
+    async function apiJsonBody(path, method, body) {
+      return apiJson(path, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body || {})
+      });
+    }
+
+    // ============ AUTH ============
     const tabs = document.querySelectorAll('.auth-tab');
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        if (tab.dataset.tab === 'login') {
-          loginForm.style.display = 'block';
-          registerForm.style.display = 'none';
-        } else {
-          loginForm.style.display = 'none';
-          registerForm.style.display = 'block';
-        }
-        hideAuthAlert();
+        const isLogin = tab.dataset.tab === 'login';
+        loginForm.style.display = isLogin ? 'block' : 'none';
+        registerForm.style.display = isLogin ? 'none' : 'block';
+        authAlert.classList.add('hidden');
       });
     });
 
-    // Auth state listener
-    onAuthStateChanged(auth, async user => {
-      if (user) {
-        currentUser = user;
-        authCard.classList.add('hidden');
-        if (pendingClaimCode) {
-          const claimResult = await attemptClaim(pendingClaimCode);
-          pendingClaimCode = null;
-          if (claimResult.success) {
-            location.reload();
-            return;
-          } else {
-            showAuthAlert(claimResult.message || 'Claim failed.', 'error');
-          }
-        }
-        checkAdminStatus();
-      } else {
-        currentUser = null;
-        authCard.classList.remove('hidden');
-        claimSection.classList.add('hidden');
-        adminDashboard.classList.add('hidden');
-        adminDropdown.style.display = 'none';
-      }
-    });
-
-    // Check admin status against Worker API route
-    async function checkAdminStatus() {
-      try {
-        const idToken = await currentUser.getIdToken();
-        const res = await fetch('/api/pass/admin/tickets', {
-          headers: { 'Authorization': `Bearer ${idToken}` }
-        });
-        if (res.ok) {
-          adminDashboard.classList.remove('hidden');
-          claimSection.classList.add('hidden');
-          adminDropdown.style.display = 'flex';
-          loadWorkerTickets();
-        } else if (res.status === 403 || res.status === 401) {
-          adminDashboard.classList.add('hidden');
-          claimSection.classList.remove('hidden');
-          adminDropdown.style.display = 'none';
-        } else {
-          await signOut(auth);
-        }
-      } catch (error) {
-        console.error('Error checking admin:', error);
-      }
-    }
-
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value;
-      const claimCodeInput = document.getElementById('loginClaimCode').value.trim();
-      pendingClaimCode = claimCodeInput || null;
+      const email = $('loginEmail').value.trim();
+      const password = $('loginPassword').value;
+      if (!email || !password) return flashAlert(authAlert, 'Enter email and password.', 'error');
       try {
         await signInWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-        showAuthAlert(parseAuthError(error), 'error');
+      } catch (err) {
+        flashAlert(authAlert, parseAuthError(err), 'error');
       }
     });
 
     registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('registerEmail').value.trim();
-      const password = document.getElementById('registerPassword').value;
-      const confirm = document.getElementById('confirmPassword').value;
-      if (password !== confirm) {
-        showAuthAlert('Passwords do not match.', 'error');
-        return;
-      }
+      const email = $('registerEmail').value.trim();
+      const password = $('registerPassword').value;
+      const confirm = $('confirmPassword').value;
+      if (!email || !password || !confirm) return flashAlert(authAlert, 'Fill all fields.', 'error');
+      if (password.length < 6) return flashAlert(authAlert, 'Password must be at least 6 characters.', 'error');
+      if (password !== confirm) return flashAlert(authAlert, 'Passwords do not match.', 'error');
       try {
         await createUserWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-        showAuthAlert(parseAuthError(error), 'error');
+      } catch (err) {
+        flashAlert(authAlert, parseAuthError(err), 'error');
       }
     });
 
-    async function attemptClaim(code) {
-      try {
-        const idToken = await currentUser.getIdToken();
-        const res = await fetch('/api/admin/claim', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${idToken}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code })
-        });
-        const data = await res.json();
-        return res.ok ? { success: true } : { success: false, message: data.error || 'Claim failed.' };
-      } catch (error) {
-        return { success: false, message: 'Network error.' };
-      }
-    }
-
-    function parseAuthError(error) {
-      switch (error.code) {
+    function parseAuthError(err) {
+      const code = err && err.code;
+      switch (code) {
         case 'auth/email-already-in-use': return 'Email already registered.';
-        case 'auth/invalid-email': return 'Invalid email.';
+        case 'auth/invalid-email': return 'Invalid email address.';
         case 'auth/weak-password': return 'Password too weak.';
-        case 'auth/user-not-found': return 'No account found with this email.';
+        case 'auth/user-not-found': return 'No account with this email.';
         case 'auth/wrong-password': return 'Incorrect password.';
-        default: return error.message || 'Authentication error.';
+        case 'auth/invalid-credential': return 'Invalid email or password.';
+        case 'auth/too-many-requests': return 'Too many attempts. Try again later.';
+        default: return (err && err.message) || 'Authentication error.';
       }
     }
 
-    claimBtn.addEventListener('click', async () => {
-      const code = claimCode.value.trim();
-      if (!code) return;
-      const result = await attemptClaim(code);
-      if (result.success) {
-        showClaimAlert('Admin access granted! Refreshing...', 'success');
-        setTimeout(() => location.reload(), 1500);
+    logoutBtn.addEventListener('click', async () => { await signOut(auth); });
+    $('unauthLogoutBtn').addEventListener('click', async () => { await signOut(auth); });
+
+    // Admin check: call GET /admin/tickets. 200 -> admin; 403 -> unauthorized
+    async function checkAdminAndRoute() {
+      try {
+        const res = await api('/admin/tickets');
+        if (res.ok) {
+          adminDropdown.style.display = 'flex';
+          unauthorizedCard.classList.add('hidden');
+          adminDashboard.classList.remove('hidden');
+          // Load default section
+          await showSection(currentSection);
+        } else if (res.status === 403) {
+          adminDashboard.classList.add('hidden');
+          adminDropdown.style.display = 'none';
+          unauthorizedCard.classList.remove('hidden');
+          $('unauthUid').textContent = currentUser ? currentUser.uid : '—';
+        } else {
+          throw new Error('Unexpected status ' + res.status);
+        }
+      } catch (err) {
+        console.error(err);
+        flashAlert(authAlert, 'Could not verify admin access: ' + err.message, 'error');
+      }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        authCard.classList.add('hidden');
+        await checkAdminAndRoute();
       } else {
-        showClaimAlert(result.message, 'error');
+        currentUser = null;
+        authCard.classList.remove('hidden');
+        unauthorizedCard.classList.add('hidden');
+        adminDashboard.classList.add('hidden');
+        adminDropdown.style.display = 'none';
       }
     });
 
+    // Dropdown
     dropdownBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       dropdownContent.classList.toggle('show');
     });
-    document.addEventListener('click', () => dropdownContent.classList.remove('show'));
-
-    logoutBtn.addEventListener('click', () => signOut(auth));
-
-    // Section Switching logic for dropdown menu
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) dropdownContent.classList.remove('show');
+    });
     document.querySelectorAll('.dropdown-item[data-section]').forEach(item => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
-        const sec = item.dataset.section;
-        showSection(sec);
+        showSection(item.dataset.section);
         dropdownContent.classList.remove('show');
       });
     });
 
-    function showSection(section) {
-      const sections = ['payments', 'withdrawals', 'members', 'testimonies', 'posts', 'workerTickets', 'workerBuyers', 'workerSms', 'workerBookmakers', 'workerSettings'];
-      sections.forEach(s => {
-        const el = document.getElementById(s + 'Section');
-        if (el) el.classList.add('hidden');
+    // ============ SECTION ROUTING ============
+    function showSection(name) {
+      currentSection = name;
+      ['tickets', 'buyers', 'sms', 'settings', 'bookmakers', 'teams'].forEach(s => {
+        $('s' + s.charAt(0).toUpperCase() + s.slice(1) + 'Section').classList.add('hidden');
       });
-      const target = document.getElementById(section + 'Section');
-      if (target) target.classList.remove('hidden');
-
-      // Load data accordingly
-      if (section === 'payments') loadLegacyPayments();
-      if (section === 'withdrawals') loadWithdrawals();
-      if (section === 'testimonies') loadTestimonies();
-      if (section === 'workerTickets') loadWorkerTickets();
-      if (section === 'workerBuyers') loadWorkerBuyers();
-      if (section === 'workerSms') loadWorkerSms();
-      if (section === 'workerBookmakers') loadWorkerBookmakers();
-      if (section === 'workerSettings') loadWorkerSettings();
+      $('s' + name.charAt(0).toUpperCase() + name.slice(1) + 'Section').classList.remove('hidden');
+      if (name === 'tickets') loadTickets();
+      if (name === 'buyers') loadBuyers();
+      if (name === 'sms') loadSms();
+      if (name === 'settings') loadSettings();
+      if (name === 'bookmakers') loadBookmakers();
+      if (name === 'teams') loadTeamSearch('');
     }
 
-    // ================= WORKER TICKETS LOGIC =================
-    const ticketLegsContainer = document.getElementById('ticketLegsContainer');
-    document.getElementById('addLegBtn').addEventListener('click', () => addLegRow());
-
-    function addLegRow(data = {}) {
-      const div = document.createElement('div');
-      div.className = 'leg-row';
-      div.innerHTML = `
-        <input type="text" class="leg-home" placeholder="Home Team" value="${data.home || ''}">
-        <input type="text" class="leg-away" placeholder="Away Team" value="${data.away || ''}">
-        <input type="text" class="leg-pick" placeholder="Pick (e.g. 1X)" value="${data.pick || ''}">
-        <input type="number" class="leg-odds" step="0.01" placeholder="Odds" value="${data.odds || ''}">
-        <button type="button" class="btn btn-red btn-sm remove-leg-btn"><i class="fa-solid fa-trash"></i></button>
-      `;
-      div.querySelector('.remove-leg-btn').addEventListener('click', () => div.remove());
-      ticketLegsContainer.appendChild(div);
+    // ============ TICKETS ============
+    function resetTicketForm() {
+      editingTicketId = null;
+      $('ticketFormTitle').textContent = 'Create Ticket';
+      $('saveTicketBtn').innerHTML = '<i class="fa-solid fa-save"></i> Save Ticket';
+      $('cancelEditBtn').classList.add('hidden');
+      legs = [{ home: '', away: '', pick: '', odds: '' }];
+      codes = {};
+      renderLegs();
+      renderCodes();
+      $('ticketSport').value = 'football';
+      $('ticketPublished').checked = true;
+      updateTotalOddsPreview();
     }
-    // Start with 1 default leg row
-    addLegRow();
 
-    async function loadWorkerTickets() {
-      const container = document.getElementById('workerTicketsListContainer');
+    function renderLegs() {
+      const el = $('legsContainer');
+      el.innerHTML = legs.map((l, i) => `
+        <div class="leg-row" data-idx="${i}">
+          <input type="text" placeholder="Home team" value="${esc(l.home)}" data-k="home">
+          <input type="text" placeholder="Away team" value="${esc(l.away)}" data-k="away">
+          <input type="text" placeholder="Pick" value="${esc(l.pick)}" data-k="pick">
+          <input type="number" step="0.01" placeholder="Odds" value="${esc(l.odds)}" data-k="odds">
+          <button type="button" class="leg-remove" data-remove="${i}" title="Remove leg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      `).join('');
+      el.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('input', (e) => {
+          const idx = Number(e.target.closest('.leg-row').dataset.idx);
+          const k = e.target.dataset.k;
+          legs[idx][k] = e.target.value;
+          if (k === 'odds') updateTotalOddsPreview();
+        });
+      });
+      el.querySelectorAll('[data-remove]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.dataset.remove);
+          if (legs.length <= 1) return;
+          legs.splice(idx, 1);
+          renderLegs();
+          updateTotalOddsPreview();
+        });
+      });
+    }
+
+    function renderCodes() {
+      const el = $('codesContainer');
+      if (!bookmakersCache.length) {
+        el.innerHTML = '<p class="muted small">No bookmakers yet. Add some in the Bookmakers section first.</p>';
+        return;
+      }
+      el.innerHTML = bookmakersCache.map(bm => `
+        <div class="code-row">
+          <span class="muted small">${esc(bm.name)}</span>
+          <input type="text" placeholder="Code" data-bmid="${bm.id}" value="${esc(codes[bm.id] || codes[String(bm.id)] || '')}">
+        </div>
+      `).join('');
+      el.querySelectorAll('input[data-bmid]').forEach(inp => {
+        inp.addEventListener('input', (e) => {
+          const bmId = e.target.dataset.bmid;
+          const val = e.target.value.trim();
+          if (val) codes[bmId] = val;
+          else delete codes[bmId];
+        });
+      });
+    }
+
+    function computeTotal() {
+      return Math.round(legs.reduce((p, l) => p * (Number(l.odds) || 1), 1) * 100) / 100;
+    }
+
+    function updateTotalOddsPreview() {
+      $('totalOddsPreview').value = computeTotal().toFixed(2);
+    }
+
+    $('addLegBtn').addEventListener('click', () => {
+      legs.push({ home: '', away: '', pick: '', odds: '' });
+      renderLegs();
+      updateTotalOddsPreview();
+    });
+
+    $('cancelEditBtn').addEventListener('click', () => resetTicketForm());
+
+    $('ticketForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const sport = $('ticketSport').value;
+      const cleanedLegs = legs.map(l => ({
+        home: String(l.home).trim(),
+        away: String(l.away).trim(),
+        pick: String(l.pick).trim(),
+        odds: Number(l.odds)
+      }));
+      const valid = cleanedLegs.length > 0 && cleanedLegs.every(l => l.home && l.away && l.pick && l.odds > 1);
+      if (!valid) return flashAlert($('ticketAlert'), 'Each leg needs home, away, pick, and odds > 1.', 'error');
+
+      const payload = {
+        sport,
+        legs: cleanedLegs,
+        codes,
+        published: $('ticketPublished').checked
+      };
+
       try {
-        const idToken = await currentUser.getIdToken();
-        const res = await fetch('/api/pass/admin/tickets', { headers: { 'Authorization': `Bearer ${idToken}` } });
-        const data = await res.json();
+        $('saveTicketBtn').disabled = true;
+        if (editingTicketId) {
+          await apiJsonBody('/admin/tickets/' + editingTicketId, 'PUT', payload);
+          flashAlert($('ticketAlert'), 'Ticket updated.', 'success');
+        } else {
+          await apiJsonBody('/admin/tickets', 'POST', payload);
+          flashAlert($('ticketAlert'), 'Ticket created.', 'success');
+        }
+        resetTicketForm();
+        await loadTickets();
+      } catch (err) {
+        flashAlert($('ticketAlert'), err.message, 'error');
+      } finally {
+        $('saveTicketBtn').disabled = false;
+      }
+    });
+
+    async function loadTickets() {
+      const el = $('ticketsListContainer');
+      el.innerHTML = '<div class="skeleton" style="height:120px;"></div>';
+      try {
+        // ensure bookmakers are available for the codes builder
+        if (!bookmakersCache.length) {
+          try {
+            const bm = await apiJson('/admin/bookmakers');
+            bookmakersCache = bm.bookmakers || [];
+          } catch (_) { /* ignore */ }
+          if (!editingTicketId) { renderLegs(); renderCodes(); }
+        }
+        const data = await apiJson('/admin/tickets');
         const tickets = data.tickets || [];
         if (!tickets.length) {
-          container.innerHTML = '<p style="color:#9a9a9a;">No tickets created yet.</p>';
+          el.innerHTML = '<p class="muted">No tickets yet.</p>';
           return;
         }
-        container.innerHTML = `
-          <table class="table">
-            <thead><tr><th>ID</th><th>Sport</th><th>Legs Count</th><th>Total Odds</th><th>Published</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${tickets.map(t => `
+        el.innerHTML = `
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
                 <tr>
-                  <td>#${t.id}</td>
-                  <td style="text-transform:uppercase;">${t.sport}</td>
-                  <td>${t.legs.length} matches</td>
-                  <td><b>${t.total_odds}</b></td>
-                  <td>${t.published ? 'Yes' : 'No'}</td>
-                  <td>
-                    <button class="btn btn-sm btn-outline edit-ticket" data-id="${t.id}">Edit</button>
-                    <button class="btn btn-sm btn-red delete-ticket" data-id="${t.id}">Delete</button>
-                  </td>
+                  <th>ID</th><th>Sport</th><th>Legs</th><th>Total</th>
+                  <th>Codes</th><th>Published</th><th>Created</th><th>Actions</th>
                 </tr>
-              `).join('')}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                ${tickets.map(t => renderTicketRow(t)).join('')}
+              </tbody>
+            </table>
+          </div>
         `;
-        container.querySelectorAll('.delete-ticket').forEach(btn => {
+        el.querySelectorAll('[data-edit]').forEach(btn => {
+          btn.addEventListener('click', () => editTicket(Number(btn.dataset.edit)));
+        });
+        el.querySelectorAll('[data-del]').forEach(btn => {
+          btn.addEventListener('click', () => deleteTicket(Number(btn.dataset.del)));
+        });
+      } catch (err) {
+        el.innerHTML = '<p class="alert alert-error">' + esc(err.message) + '</p>';
+      }
+    }
+
+    function renderTicketRow(t) {
+      const legsHtml = t.legs.map(l => `
+        <div class="small">${esc(l.home)} vs ${esc(l.away)} <span class="muted">·</span> ${esc(l.pick)} @ ${esc(l.odds)}</div>
+      `).join('');
+      const codeEntries = Object.entries(t.codes || {});
+      const codesHtml = codeEntries.length
+        ? codeEntries.map(([k, v]) => `<span class="code-chip" title="Bookmaker ID ${esc(k)}">${esc(v)}</span>`).join('')
+        : '<span class="muted small">—</span>';
+      return `
+        <tr>
+          <td class="mono">${esc(t.id)}</td>
+          <td>${esc(t.sport)}</td>
+          <td style="min-width:220px;">${legsHtml}</td>
+          <td><strong>${esc(t.total_odds)}</strong></td>
+          <td>${codesHtml}</td>
+          <td>${t.published ? '<span class="pill pill-green">Yes</span>' : '<span class="pill pill-gray">No</span>'}</td>
+          <td class="small">${esc(fmtShortDate(t.created_at))}</td>
+          <td style="white-space:nowrap;">
+            <button class="btn btn-sm btn-outline" data-edit="${t.id}"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn btn-sm btn-red" data-del="${t.id}"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `;
+    }
+
+    function editTicket(id) {
+      const t = bookmakersCache && document.querySelector(`[data-edit="${id}"]`);
+      // find ticket from last loaded (we re-fetch to be safe)
+      apiJson('/admin/tickets').then(data => {
+        const ticket = (data.tickets || []).find(x => x.id === id);
+        if (!ticket) return;
+        editingTicketId = id;
+        $('ticketFormTitle').textContent = 'Edit Ticket #' + id;
+        $('saveTicketBtn').innerHTML = '<i class="fa-solid fa-save"></i> Update Ticket';
+        $('cancelEditBtn').classList.remove('hidden');
+        $('ticketSport').value = ticket.sport;
+        $('ticketPublished').checked = !!ticket.published;
+        legs = ticket.legs.map(l => ({ home: l.home, away: l.away, pick: l.pick, odds: String(l.odds) }));
+        codes = {};
+        Object.entries(ticket.codes || {}).forEach(([k, v]) => { codes[k] = v; });
+        renderLegs();
+        renderCodes();
+        updateTotalOddsPreview();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }).catch(err => flashAlert($('ticketAlert'), err.message, 'error'));
+    }
+
+    async function deleteTicket(id) {
+      if (!confirm('Delete ticket #' + id + '?')) return;
+      try {
+        await apiJson('/admin/tickets/' + id, { method: 'DELETE' });
+        flashAlert($('ticketAlert'), 'Ticket deleted.', 'success');
+        await loadTickets();
+      } catch (err) {
+        flashAlert($('ticketAlert'), err.message, 'error');
+      }
+    }
+
+    // ============ BUYERS ============
+    $('buyerRefreshBtn').addEventListener('click', loadBuyers);
+    ['buyerSearch', 'buyerDate', 'buyerStatus'].forEach(id => {
+      $(id).addEventListener('input', () => {
+        clearTimeout(window._buyerDebounce);
+        window._buyerDebounce = setTimeout(loadBuyers, 350);
+      });
+    });
+
+    async function loadBuyers() {
+      const el = $('buyersListContainer');
+      el.innerHTML = '<div class="skeleton" style="height:120px;"></div>';
+      const params = new URLSearchParams();
+      const q = $('buyerSearch').value.trim();
+      const date = $('buyerDate').value;
+      const status = $('buyerStatus').value;
+      if (q) params.set('q', q);
+      if (date) params.set('date', date);
+      if (status) params.set('status', status);
+      try {
+        const data = await apiJson('/admin/buyers?' + params.toString());
+        $('statToday').textContent = String(data.today.count);
+        $('statTodayTotal').textContent = fmtMoney(data.today.total);
+        $('statAll').textContent = String(data.all.count);
+        $('statAllTotal').textContent = fmtMoney(data.all.total);
+
+        const rows = data.buyers || [];
+        if (!rows.length) {
+          el.innerHTML = '<p class="muted">No buyers matching these filters.</p>';
+          return;
+        }
+        el.innerHTML = `
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Phone</th><th>Amount</th><th>Status</th><th>SMS</th>
+                  <th>Pass</th><th>Expires</th><th>Created</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(b => renderBuyerRow(b)).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        el.querySelectorAll('[data-resend-sms]').forEach(btn => {
+          btn.addEventListener('click', () => resendSms(btn.dataset.resendSms));
+        });
+        el.querySelectorAll('[data-revoke-code]').forEach(btn => {
+          btn.addEventListener('click', () => revokePass(btn.dataset.revokeCode));
+        });
+      } catch (err) {
+        el.innerHTML = '<p class="alert alert-error">' + esc(err.message) + '</p>';
+      }
+    }
+
+    function statusPill(s) {
+      if (s === 'paid') return '<span class="pill pill-green">Paid</span>';
+      if (s === 'failed') return '<span class="pill pill-red">Failed</span>';
+      if (s === 'pending') return '<span class="pill pill-yellow">Pending</span>';
+      return '<span class="pill pill-gray">' + esc(s || '—') + '</span>';
+    }
+
+    function renderBuyerRow(b) {
+      const passCell = b.code
+        ? `<span class="mono">${esc(b.code)}</span>${b.revoked ? ' <span class="pill pill-red">Revoked</span>' : ''}`
+        : '<span class="muted small">—</span>';
+      const expires = b.expires_at ? esc(fmtShortDate(b.expires_at)) : '—';
+      return `
+        <tr>
+          <td class="mono">${esc(b.phone)}</td>
+          <td>${esc(fmtMoney(b.amount))}</td>
+          <td>${statusPill(b.status)}</td>
+          <td class="small">${esc(b.sms_status || '—')}</td>
+          <td>${passCell}</td>
+          <td class="small">${expires}</td>
+          <td class="small">${esc(fmtShortDate(b.created_at))}</td>
+          <td style="white-space:nowrap;">
+            <button class="btn btn-sm btn-outline" data-resend-sms="${esc(b.id)}" title="Resend SMS">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+            ${b.code ? `<button class="btn btn-sm btn-red" data-revoke-code="${esc(b.code)}" title="Revoke pass">
+              <i class="fa-solid fa-ban"></i>
+            </button>` : ''}
+          </td>
+        </tr>
+      `;
+    }
+
+    $('grantForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const phone = $('grantPhone').value.trim();
+      if (!phone) return;
+      try {
+        const data = await apiJsonBody('/admin/grant', 'POST', { phone });
+        flashAlert($('grantAlert'), 'Pass granted.', 'success');
+        $('grantLinkBox').classList.remove('hidden');
+        $('grantLink').textContent = data.link || '(no link returned)';
+        $('grantPhone').value = '';
+        await loadBuyers();
+      } catch (err) {
+        flashAlert($('grantAlert'), err.message, 'error');
+      }
+    });
+
+    $('revokeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = $('revokeCode').value.trim();
+      if (!code) return;
+      await revokePass(code);
+      $('revokeCode').value = '';
+    });
+
+    async function revokePass(code) {
+      if (!confirm('Revoke pass ' + code + '?')) return;
+      try {
+        await apiJsonBody('/admin/revoke', 'POST', { code, revoked: true });
+        flashAlert($('revokeAlert'), 'Pass revoked.', 'success');
+        if (currentSection === 'buyers') await loadBuyers();
+      } catch (err) {
+        flashAlert($('revokeAlert'), err.message, 'error');
+      }
+    }
+
+    async function resendSms(orderId) {
+      try {
+        await apiJsonBody('/admin/sms/resend', 'POST', { order_id: orderId });
+        flashAlert($('buyerRefreshBtn') && $('grantAlert') ? $('grantAlert') : null, 'SMS re-queued.', 'success');
+        await loadBuyers();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    // ============ SMS ============
+    $('smsRefreshBtn').addEventListener('click', loadSms);
+    $('smsSendAllBtn').addEventListener('click', async () => {
+      try {
+        const data = await apiJsonBody('/admin/sms/send-now', 'POST', {});
+        alert('Attempted: ' + data.attempted);
+        await loadSms();
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    async function loadSms() {
+      const el = $('smsListContainer');
+      el.innerHTML = '<div class="skeleton" style="height:120px;"></div>';
+      try {
+        const data = await apiJson('/admin/sms');
+        const status = $('smsWindowStatus');
+        status.classList.remove('hidden');
+        if (data.window_open) {
+          status.className = 'alert alert-success';
+          status.textContent = 'SMS window is OPEN (8:00 AM – 6:00 PM EAT). Queued messages will send automatically.';
+        } else {
+          status.className = 'alert alert-info';
+          status.textContent = 'SMS window is CLOSED. Messages will be sent automatically at 8:00 AM EAT.';
+        }
+        const rows = data.sms || [];
+        if (!rows.length) {
+          el.innerHTML = '<p class="muted">SMS queue is empty.</p>';
+          return;
+        }
+        el.innerHTML = `
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th><th>Phone</th><th>Message</th><th>Status</th>
+                  <th>Created</th><th>Sent</th><th>Error</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(s => `
+                  <tr>
+                    <td class="mono">${esc(s.id)}</td>
+                    <td class="mono">${esc(s.phone)}</td>
+                    <td class="small" style="max-width:320px;word-break:break-word;">${esc(s.message)}</td>
+                    <td>${statusPill(s.status)}</td>
+                    <td class="small">${esc(fmtShortDate(s.created_at))}</td>
+                    <td class="small">${s.sent_at ? esc(fmtShortDate(s.sent_at)) : '—'}</td>
+                    <td class="small muted">${s.error ? esc(s.error) : '—'}</td>
+                    <td>
+                      <button class="btn btn-sm btn-outline" data-sms-send="${esc(s.id)}" title="Send now">
+                        <i class="fa-solid fa-paper-plane"></i>
+                      </button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        el.querySelectorAll('[data-sms-send]').forEach(btn => {
           btn.addEventListener('click', async () => {
-            if (!confirm('Delete ticket?')) return;
-            const idToken = await currentUser.getIdToken();
-            await fetch(`/api/pass/admin/tickets/${btn.dataset.id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${idToken}` } });
-            loadWorkerTickets();
+            try {
+              await apiJsonBody('/admin/sms/send-now', 'POST', { id: Number(btn.dataset.smsSend) });
+              await loadSms();
+            } catch (err) {
+              alert(err.message);
+            }
           });
         });
       } catch (err) {
-        container.innerHTML = '<p class="alert alert-error">Failed to load tickets.</p>';
+        el.innerHTML = '<p class="alert alert-error">' + esc(err.message) + '</p>';
       }
     }
 
-    document.getElementById('workerTicketForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const sport = document.getElementById('ticketSport').value;
-      const published = parseInt(document.getElementById('ticketPublished').value);
-      
-      const legs = [];
-      document.querySelectorAll('.leg-row').forEach(row => {
-        legs.push({
-          home: row.querySelector('.leg-home').value,
-          away: row.querySelector('.leg-away').value,
-          pick: row.querySelector('.leg-pick').value,
-          odds: parseFloat(row.querySelector('.leg-odds').value) || 1
-        });
-      });
-
-      const codes = {
-        sportpesa: document.getElementById('codeSportpesa').value,
-        betway: document.getElementById('codeBetway').value,
-        fortebet: document.getElementById('codeFortebet').value,
-        other: document.getElementById('codeAirtel').value
-      };
-
-      const editId = document.getElementById('editTicketId').value;
-      const url = editId ? `/api/pass/admin/tickets/${editId}` : '/api/pass/admin/tickets';
-      const method = editId ? 'PUT' : 'POST';
-
-      const idToken = await currentUser.getIdToken();
-      const res = await fetch(url, {
-        method,
-        headers: { 'Authorization': `Bearer ${idToken}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sport, legs, codes, published })
-      });
-
-      if (res.ok) {
-        alert('Ticket saved successfully!');
-        e.target.reset();
-        document.getElementById('editTicketId').value = '';
-        document.getElementById('cancelTicketEditBtn').classList.add('hidden');
-        ticketLegsContainer.innerHTML = '';
-        addLegRow();
-        loadWorkerTickets();
-      } else {
-        const err = await res.json();
-        alert(err.error || 'Failed to save ticket.');
-      }
-    });
-
-    // ================= WORKER BUYERS & GRANTS =================
-    async function loadWorkerBuyers(query = '') {
-      const container = document.getElementById('workerBuyersTableContainer');
+    // ============ SETTINGS ============
+    async function loadSettings() {
       try {
-        const idToken = await currentUser.getIdToken();
-        const phone = document.getElementById('buyerSearchPhone').value;
-        const status = document.getElementById('buyerSearchStatus').value;
-        const date = document.getElementById('buyerSearchDate').value;
-        
-        let url = '/api/pass/admin/buyers?';
-        if (phone) url += `q=${phone}&`;
-        if (status) url += `status=${status}&`;
-        if (date) url += `date=${date}&`;
-
-        const res = await fetch(url, { headers: { 'Authorization': `Bearer ${idToken}` } });
-        const data = await res.json();
-        
-        document.getElementById('statTodayTotal').textContent = `UGX ${data.today.total.toLocaleString()}`;
-        document.getElementById('statTodayCount').textContent = `${data.today.count} passes sold`;
-        document.getElementById('statAllTotal').textContent = `UGX ${data.all.total.toLocaleString()}`;
-        document.getElementById('statAllCount').textContent = `${data.all.count} passes sold`;
-
-        const buyers = data.buyers || [];
-        if (!buyers.length) {
-          container.innerHTML = '<p style="color:#9a9a9a;">No buyer records found.</p>';
-          return;
-        }
-
-        container.innerHTML = `
-          <table class="table">
-            <thead><tr><th>Phone</th><th>Amount</th><th>Status</th><th>Date</th><th>Pass Code</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${buyers.map(b => `
-                <tr>
-                  <td>${b.phone}</td>
-                  <td>UGX ${b.amount}</td>
-                  <td><span style="color:${b.status==='paid'?'#2cd07e':'#ff4444'}">${b.status}</span></td>
-                  <td>${new Date(b.created_at).toLocaleString()}</td>
-                  <td><code>${b.code || 'N/A'}</code></td>
-                  <td>
-                    ${b.code ? `<button class="btn btn-sm ${b.revoked ? 'btn-green' : 'btn-red'} toggle-revoke" data-code="${b.code}" data-revoked="${b.revoked}">${b.revoked ? 'Unrevoke' : 'Revoke'}</button>` : ''}
-                  </td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        `;
-
-        container.querySelectorAll('.toggle-revoke').forEach(btn => {
-          btn.addEventListener('click', async () => {
-            const code = btn.dataset.code;
-            const revoked = btn.dataset.revoked === '1';
-            const idToken = await currentUser.getIdToken();
-            await fetch('/api/pass/admin/revoke', {
-              method: 'POST',
-              headers: { 'Authorization': `Bearer ${idToken}`, 'Content-Type': 'application/json' },
-              body: JSON.stringify({ code, revoked: !revoked })
-            });
-            loadWorkerBuyers();
-          });
-        });
-      } catch (e) {
-        container.innerHTML = '<p class="alert alert-error">Failed to load buyers.</p>';
-      }
-    }
-
-    document.getElementById('buyerSearchFilterBtn').addEventListener('click', () => loadWorkerBuyers());
-
-    document.getElementById('manualGrantBtn').addEventListener('click', async () => {
-      const phone = document.getElementById('grantPhoneInput').value.trim();
-      if (!phone) return alert('Enter phone number.');
-      const idToken = await currentUser.getIdToken();
-      const res = await fetch('/api/pass/admin/grant', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${idToken}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        document.getElementById('grantResultBox').innerHTML = `<p class="alert alert-success">Pass granted! Link: <a href="${data.link}" target="_blank" style="color:#fff;">${data.link}</a></p>`;
-        loadWorkerBuyers();
-      } else {
-        alert(data.error || 'Failed to grant pass.');
-      }
-    });
-
-    // ================= WORKER SMS QUEUE =================
-    async function loadWorkerSms() {
-      const container = document.getElementById('workerSmsTableContainer');
-      try {
-        const idToken = await currentUser.getIdToken();
-        const res = await fetch('/api/pass/admin/sms', { headers: { 'Authorization': `Bearer ${idToken}` } });
-        const data = await res.json();
-        const smsList = data.sms || [];
-        container.innerHTML = `
-          <p style="margin-bottom:10px;color:#aaa;">SMS Window Open (8am-6pm EAT): <b>${data.window_open ? 'YES' : 'NO'}</b></p>
-          <table class="table">
-            <thead><tr><th>ID</th><th>Phone</th><th>Message</th><th>Status</th><th>Error</th></tr></thead>
-            <tbody>
-              ${smsList.map(s => `
-                <tr>
-                  <td>${s.id}</td>
-                  <td>${s.phone}</td>
-                  <td>${s.message}</td>
-                  <td>${s.status}</td>
-                  <td style="color:#ff4444;">${s.error || '-'}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        `;
-      } catch (e) {
-        container.innerHTML = '<p class="alert alert-error">Failed to load SMS logs.</p>';
-      }
-    }
-
-    document.getElementById('forceFlushSmsBtn').addEventListener('click', async () => {
-      const idToken = await currentUser.getIdToken();
-      const res = await fetch('/api/pass/admin/sms/send-now', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${idToken}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({})
-      });
-      const data = await res.json();
-      alert(`Flush attempted. Messages processed: ${data.attempted}`);
-      loadWorkerSms();
-    });
-
-    // ================= WORKER BOOKMAKERS =================
-    async function loadWorkerBookmakers() {
-      const container = document.getElementById('workerBookmakersList');
-      try {
-        const idToken = await currentUser.getIdToken();
-        const res = await fetch('/api/pass/admin/bookmakers', { headers: { 'Authorization': `Bearer ${idToken}` } });
-        const data = await res.json();
-        const bms = data.bookmakers || [];
-        container.innerHTML = `
-          <table class="table">
-            <thead><tr><th>ID</th><th>Name</th><th>Sort</th><th>Actions</th></tr></thead>
-            <tbody>
-              ${bms.map(b => `
-                <tr>
-                  <td>${b.id}</td>
-                  <td>${b.name}</td>
-                  <td>${b.sort}</td>
-                  <td><button class="btn btn-sm btn-red delete-bm" data-id="${b.id}">Delete</button></td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        `;
-        container.querySelectorAll('.delete-bm').forEach(btn => {
-          btn.addEventListener('click', async () => {
-            const idToken = await currentUser.getIdToken();
-            await fetch(`/api/pass/admin/bookmakers/${btn.dataset.id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${idToken}` } });
-            loadWorkerBookmakers();
-          });
-        });
-      } catch (e) {
-        container.innerHTML = '<p class="alert alert-error">Failed to load bookmakers.</p>';
-      }
-    }
-
-    document.getElementById('bookmakerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('bmName').value;
-      const logo_url = document.getElementById('bmLogo').value;
-      const sort = parseInt(document.getElementById('bmSort').value) || 0;
-      const idToken = await currentUser.getIdToken();
-      const res = await fetch('/api/pass/admin/bookmakers', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${idToken}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, logo_url, sort })
-      });
-      if (res.ok) {
-        e.target.reset();
-        loadWorkerBookmakers();
-      } else {
-        alert('Failed to add bookmaker.');
-      }
-    });
-
-    // ================= WORKER SETTINGS =================
-    async function loadWorkerSettings() {
-      try {
-        const idToken = await currentUser.getIdToken();
-        const res = await fetch('/api/pass/admin/settings', { headers: { 'Authorization': `Bearer ${idToken}` } });
-        const data = await res.json();
+        const data = await apiJson('/admin/settings');
         const s = data.settings || {};
-        document.getElementById('st_tickets_to_show').value = s.tickets_to_show || 5;
-        document.getElementById('st_price').value = s.price || 1000;
-        document.getElementById('st_pass_hours').value = s.pass_hours || 24;
-        document.getElementById('st_sms_template').value = s.sms_template || '';
-        document.getElementById('st_disclaimer').value = s.disclaimer || '';
-      } catch (e) {
-        console.error('Failed to load settings');
+        $('setTicketsToShow').value = s.tickets_to_show;
+        $('setPrice').value = s.price;
+        $('setPassHours').value = s.pass_hours;
+        $('setSmsTemplate').value = s.sms_template;
+        $('setDisclaimer').value = s.disclaimer;
+      } catch (err) {
+        flashAlert($('settingsAlert'), err.message, 'error');
       }
     }
 
-    document.getElementById('workerSettingsForm').addEventListener('submit', async (e) => {
+    $('settingsForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const payload = {
-        tickets_to_show: document.getElementById('st_tickets_to_show').value,
-        price: document.getElementById('st_price').value,
-        pass_hours: document.getElementById('st_pass_hours').value,
-        sms_template: document.getElementById('st_sms_template').value,
-        disclaimer: document.getElementById('st_disclaimer').value,
+        tickets_to_show: $('setTicketsToShow').value,
+        price: $('setPrice').value,
+        pass_hours: $('setPassHours').value,
+        sms_template: $('setSmsTemplate').value,
+        disclaimer: $('setDisclaimer').value
       };
-      const idToken = await currentUser.getIdToken();
-      const res = await fetch('/api/pass/admin/settings', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${idToken}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const alertBox = document.getElementById('settingsAlert');
-      if (res.ok) {
-        alertBox.textContent = 'Settings updated successfully!';
-        alertBox.className = 'alert alert-success';
-        alertBox.classList.remove('hidden');
-      } else {
-        const err = await res.json();
-        alertBox.textContent = err.error || 'Failed to update settings.';
-        alertBox.className = 'alert alert-error';
-        alertBox.classList.remove('hidden');
+      try {
+        $('saveSettingsBtn').disabled = true;
+        await apiJsonBody('/admin/settings', 'POST', payload);
+        flashAlert($('settingsAlert'), 'Settings saved.', 'success');
+      } catch (err) {
+        flashAlert($('settingsAlert'), err.message, 'error');
+      } finally {
+        $('saveSettingsBtn').disabled = false;
       }
     });
 
-    // Legacy loaders placeholder functions to avoid reference errors
-    function loadLegacyPayments() { loadWorkerBuyers(); }
-    function loadWithdrawals() {}
-    function loadTestimonies() {}
+    // ============ BOOKMAKERS ============
+    function resetBookmakerForm() {
+      editingBookmakerId = null;
+      $('bookmakerFormTitle').textContent = 'Add Bookmaker';
+      $('saveBookmakerBtn').innerHTML = '<i class="fa-solid fa-save"></i> Save';
+      $('cancelBookmakerBtn').classList.add('hidden');
+      $('bmName').value = '';
+      $('bmSort').value = '0';
+      $('bmLogo').value = '';
+    }
 
-    adminDropdown.style.display = 'none';
+    $('cancelBookmakerBtn').addEventListener('click', resetBookmakerForm);
+
+    $('bookmakerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = $('bmName').value.trim();
+      if (!name) return flashAlert($('bookmakerAlert'), 'Name required.', 'error');
+      const payload = { name, logo_url: $('bmLogo').value.trim() || null, sort: Number($('bmSort').value) || 0 };
+      try {
+        if (editingBookmakerId) {
+          await apiJsonBody('/admin/bookmakers/' + editingBookmakerId, 'PUT', payload);
+          flashAlert($('bookmakerAlert'), 'Bookmaker updated.', 'success');
+        } else {
+          await apiJsonBody('/admin/bookmakers', 'POST', payload);
+          flashAlert($('bookmakerAlert'), 'Bookmaker added.', 'success');
+        }
+        resetBookmakerForm();
+        bookmakersCache = [];
+        await loadBookmakers();
+      } catch (err) {
+        flashAlert($('bookmakerAlert'), err.message, 'error');
+      }
+    });
+
+    async function loadBookmakers() {
+      const el = $('bookmakersListContainer');
+      el.innerHTML = '<div class="skeleton" style="height:100px;"></div>';
+      try {
+        const data = await apiJson('/admin/bookmakers');
+        bookmakersCache = data.bookmakers || [];
+        if (!bookmakersCache.length) {
+          el.innerHTML = '<p class="muted">No bookmakers yet.</p>';
+          return;
+        }
+        el.innerHTML = `
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>ID</th><th>Logo</th><th>Name</th><th>Sort</th><th>Actions</th></tr></thead>
+              <tbody>
+                ${bookmakersCache.map(b => `
+                  <tr>
+                    <td class="mono">${esc(b.id)}</td>
+                    <td>${b.logo_url ? `<img src="${esc(b.logo_url)}" alt="" style="height:28px;width:28px;object-fit:contain;background:#1a1a1a;">` : '—'}</td>
+                    <td>${esc(b.name)}</td>
+                    <td>${esc(b.sort)}</td>
+                    <td style="white-space:nowrap;">
+                      <button class="btn btn-sm btn-outline" data-bm-edit="${b.id}"><i class="fa-solid fa-pen"></i></button>
+                      <button class="btn btn-sm btn-red" data-bm-del="${b.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        el.querySelectorAll('[data-bm-edit]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const bm = bookmakersCache.find(x => x.id === Number(btn.dataset.bmEdit));
+            if (!bm) return;
+            editingBookmakerId = bm.id;
+            $('bookmakerFormTitle').textContent = 'Edit Bookmaker #' + bm.id;
+            $('saveBookmakerBtn').innerHTML = '<i class="fa-solid fa-save"></i> Update';
+            $('cancelBookmakerBtn').classList.remove('hidden');
+            $('bmName').value = bm.name;
+            $('bmSort').value = String(bm.sort || 0);
+            $('bmLogo').value = bm.logo_url || '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        });
+        el.querySelectorAll('[data-bm-del]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            if (!confirm('Delete bookmaker?')) return;
+            try {
+              await apiJson('/admin/bookmakers/' + btn.dataset.bmDel, { method: 'DELETE' });
+              bookmakersCache = [];
+              await loadBookmakers();
+            } catch (err) {
+              alert(err.message);
+            }
+          });
+        });
+      } catch (err) {
+        el.innerHTML = '<p class="alert alert-error">' + esc(err.message) + '</p>';
+      }
+    }
+
+    // ============ TEAMS ============
+    let teamSearchDebounce = null;
+    $('teamSearch').addEventListener('input', () => {
+      clearTimeout(teamSearchDebounce);
+      teamSearchDebounce = setTimeout(() => loadTeamSearch($('teamSearch').value.trim()), 400);
+    });
+
+    async function loadTeamSearch(q) {
+      const el = $('teamSearchResults');
+      if (!q || q.length < 2) {
+        el.innerHTML = '<p class="muted small">Type at least 2 characters to search.</p>';
+        return;
+      }
+      el.innerHTML = '<div class="skeleton" style="height:100px;"></div>';
+      try {
+        const data = await apiJson('/admin/teams/search?q=' + encodeURIComponent(q));
+        const saved = data.saved || [];
+        const remote = data.remote || [];
+        el.innerHTML = `
+          ${saved.length ? `
+            <h3 style="margin:16px 0 8px;color:#ef1b2d;font-size:1.1rem;text-transform:uppercase;">Saved</h3>
+            ${saved.map(t => `
+              <div class="team-result">
+                ${t.logo_url ? `<img src="${esc(t.logo_url)}" alt="">` : '<div style="width:32px;height:32px;background:#1a1a1a;"></div>'}
+                <span class="name">${esc(t.name)}</span>
+                <button class="btn btn-sm btn-red" data-team-del="${esc(t.name)}">Delete</button>
+              </div>
+            `).join('')}
+          ` : ''}
+          ${remote.length ? `
+            <h3 style="margin:16px 0 8px;color:#ef1b2d;font-size:1.1rem;text-transform:uppercase;">Remote (TheSportsDB)</h3>
+            ${remote.map(t => `
+              <div class="team-result">
+                ${t.badge_url ? `<img src="${esc(t.badge_url)}" alt="">` : '<div style="width:32px;height:32px;background:#1a1a1a;"></div>'}
+                <div style="flex:1;">
+                  <div class="name">${esc(t.name)}</div>
+                  <div class="meta">${esc(t.sport || '')}${t.league ? ' · ' + esc(t.league) : ''}</div>
+                </div>
+                <button class="btn btn-sm btn-green" data-team-save="${esc(t.name)}" data-team-badge="${esc(t.badge_url)}">Save</button>
+              </div>
+            `).join('')}
+          ` : ''}
+          ${!saved.length && !remote.length ? '<p class="muted small">No results.</p>' : ''}
+        `;
+        el.querySelectorAll('[data-team-save]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            try {
+              btn.disabled = true;
+              await apiJsonBody('/admin/teams', 'POST', {
+                name: btn.dataset.teamSave,
+                badge_url: btn.dataset.teamBadge
+              });
+              btn.textContent = 'Saved';
+              btn.classList.remove('btn-green');
+              btn.classList.add('btn-outline');
+            } catch (err) {
+              alert(err.message);
+              btn.disabled = false;
+            }
+          });
+        });
+        el.querySelectorAll('[data-team-del]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            if (!confirm('Delete saved logo for ' + btn.dataset.teamDel + '?')) return;
+            try {
+              await apiJson('/admin/teams?name=' + encodeURIComponent(btn.dataset.teamDel), { method: 'DELETE' });
+              await loadTeamSearch($('teamSearch').value.trim());
+            } catch (err) {
+              alert(err.message);
+            }
+          });
+        });
+      } catch (err) {
+        el.innerHTML = '<p class="alert alert-error">' + esc(err.message) + '</p>';
+      }
+    }
+
+    // Custom team upload -> POST /admin/upload
+    $('customTeamUploadBtn').addEventListener('click', () => $('customTeamFile').click());
+    $('customTeamFile').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      $('customTeamPreview').src = URL.createObjectURL(file);
+      $('customTeamPreview').style.display = 'block';
+      try {
+        const fd = new FormData();
+        fd.append('file', file);
+        const token = await currentUser.getIdToken();
+        const res = await fetch(API + '/admin/upload', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + token },
+          body: fd
+        });
+        const data = await res.json();
+        if (!res.ok || !data.url) throw new Error(data.error || 'Upload failed');
+        $('customTeamLogoUrl').value = data.url;
+        flashAlert($('customTeamAlert'), 'Image uploaded.', 'success');
+      } catch (err) {
+        flashAlert($('customTeamAlert'), err.message, 'error');
+      }
+    });
+
+    $('customTeamForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = $('customTeamName').value.trim();
+      const logo = $('customTeamLogoUrl').value.trim();
+      if (!name) return flashAlert($('customTeamAlert'), 'Team name required.', 'error');
+      if (!logo) return flashAlert($('customTeamAlert'), 'Please upload a logo first.', 'error');
+      try {
+        await apiJsonBody('/admin/teams', 'POST', { name, logo_url: logo });
+        flashAlert($('customTeamAlert'), 'Team saved.', 'success');
+        $('customTeamForm').reset();
+        $('customTeamPreview').style.display = 'none';
+        $('customTeamLogoUrl').value = '';
+      } catch (err) {
+        flashAlert($('customTeamAlert'), err.message, 'error');
+      }
+    });
+
+    // ============ INIT ============
+    resetTicketForm();
   </script>
 </body>
 </html>
- 
