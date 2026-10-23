@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Today's tickets - Boujee Sports</title>
+<link rel="icon" href="sports.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--bg:#050505;--panel:#111;--panel2:#171717;--line:#242424;--text:#f7f7f7;--muted:#8a8a8a;--red:#ef1b2d;--green:#2fbf71;--amber:#ffb020;
+--font:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,'Inter',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;border-radius:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.5;padding-bottom:40px;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+.topbar{background:#111;border-bottom:1px solid var(--line);padding:12px 0;position:sticky;top:0;z-index:10}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;text-transform:uppercase;letter-spacing:-.02em}
+.brand img{width:32px;height:32px}
+.brand i{color:var(--red);font-style:normal}
+.timer{font-size:.8rem;color:var(--muted);text-align:right}
+.timer strong{display:block;color:var(--green);font-size:1rem;font-variant-numeric:tabular-nums}
+.timer.low strong{color:var(--amber)}
+h1{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin:22px 0 4px}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:18px}
+.ticket{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--red);margin-bottom:16px}
+.t-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.t-head .sport{font-weight:700;font-size:.9rem;text-transform:capitalize}
+.t-head .total{font-weight:800;font-size:1.1rem;color:var(--red)}
+.t-head .total small{color:var(--muted);font-weight:500;font-size:.72rem;margin-right:6px}
+.leg{padding:14px;border-bottom:1px solid #1c1c1c}
+.leg:last-of-type{border-bottom:none}
+.teams{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.team{display:flex;align-items:center;gap:8px;flex:1;min-width:0;font-weight:700;font-size:.92rem;line-height:1.25}
+.team.away{justify-content:flex-end;text-align:right}
+.team img{width:28px;height:28px;object-fit:contain;flex-shrink:0}
+.vs{color:var(--muted);font-size:.75rem;flex-shrink:0}
+.pickline{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:.88rem}
+.pick{color:#d7d7d7}
+.odds{font-weight:800;color:var(--green)}
+.codes{padding:14px;background:#0d0d0d;border-top:1px solid var(--line)}
+.codes .lbl{font-size:.75rem;color:var(--muted);margin-bottom:8px}
+.code-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0}
+.code-row+.code-row{border-top:1px solid #1c1c1c}
+.bm{display:flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600}
+.bm img{width:22px;height:22px;object-fit:contain}
+.code-val{display:flex;align-items:center;gap:8px}
+.code-val code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1rem;font-weight:700;letter-spacing:.04em;background:#1a1a1a;border:1px solid #2a2a2a;padding:6px 10px}
+.copy{background:var(--red);color:#fff;border:none;padding:8px 12px;font-weight:700;font-size:.8rem;cursor:pointer}
+.copy.done{background:var(--green)}
+.copy:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.disclaimer{color:#6a6a6a;font-size:.75rem;text-align:center;margin-top:22px;line-height:1.5}
+.state{text-align:center;padding:60px 16px}
+.state i{font-size:2.2rem;color:var(--red);margin-bottom:14px}
+.state h1{margin-top:0}
+.state p{color:var(--muted);margin:8px auto 20px;max-width:360px;font-size:.92rem}
+.btn{display:inline-block;background:var(--red);color:#fff;padding:13px 20px;font-weight:700;text-transform:uppercase;font-size:.9rem;letter-spacing:.02em}
+.spin{width:36px;height:36px;margin:0 auto 14px;border:3px solid #2a2a2a;border-top-color:var(--red);animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap">
+  <a class="brand" href="/"><img src="sports.png" alt=""><span>Boujee<i>Sports</i></span></a>
+  <div class="timer hidden" id="timer" style="display:none">Pass ends in<strong id="timeLeft">--</strong></div>
+</div></div>
+
+<main class="wrap" id="app">
+  <div class="state"><div class="spin"></div><p>Loading your tickets...</p></div>
+</main>
+
+<script>
+(function(){
+  var app = document.getElementById('app');
+  var timerBox = document.getElementById('timer');
+  var timeLeft = document.getElementById('timeLeft');
+  var code = new URLSearchParams(location.search).get('p');
+
+  function esc(s){ var d=document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+
+  function showState(icon, title, text, withBtn){
+    app.innerHTML = '<div class="state"><i class="fa-solid ' + icon + '"></i><h1>' + esc(title) + '</h1><p>' + esc(text) + '</p>' +
+      (withBtn ? '<a class="btn" href="/">Back to Boujee Sports</a>' : '') + '</div>';
+  }
+
+  function startTimer(expiresAt){
+    timerBox.style.display = 'block';
+    function tick(){
+      var ms = expiresAt - Date.now();
+      if (ms <= 0){ location.reload(); return; }
+      var h = Math.floor(ms/3600000), m = Math.floor(ms%3600000/60000), s = Math.floor(ms%60000/1000);
+      timeLeft.textContent = h + 'h ' + String(m).padStart(2,'0') + 'm ' + String(s).padStart(2,'0') + 's';
+      timerBox.classList.toggle('low', ms < 3600000);
+    }
+    tick(); setInterval(tick, 1000);
+  }
+
+  function logo(url){ return url ? '<img src="' + esc(url) + '" alt="" loading="lazy">' : ''; }
+
+  function renderTicket(t, bookmakers){
+    var legs = t.legs.map(function(l){
+      return '<div class="leg">' +
+        '<div class="teams">' +
+          '<div class="team">' + logo(l.home_logo) + '<span>' + esc(l.home) + '</span></div>' +
+          '<span class="vs">vs</span>' +
+          '<div class="team away"><span>' + esc(l.away) + '</span>' + logo(l.away_logo) + '</div>' +
+        '</div>' +
+        '<div class="pickline"><span class="pick">' + esc(l.pick) + '</span><span class="odds">' + Number(l.odds).toFixed(2) + '</span></div>' +
+      '</div>';
+    }).join('');
+
+    var rows = bookmakers.filter(function(b){ return t.codes && t.codes[b.id]; }).map(function(b){
+      var c = t.codes[b.id];
+      return '<div class="code-row"><div class="bm">' + logo(b.logo_url) + '<span>' + esc(b.name) + '</span></div>' +
+        '<div class="code-val"><code>' + esc(c) + '</code><button class="copy" type="button" data-copy="' + esc(c) + '">Copy</button></div></div>';
+    }).join('');
+    var codes = rows ? '<div class="codes"><div class="lbl">Booking codes</div>' + rows + '</div>' : '';
+
+    return '<article class="ticket">' +
+      '<div class="t-head"><span class="sport">' + esc(t.sport) + ' &middot; ' + t.legs.length + (t.legs.length === 1 ? ' match' : ' matches') + '</span>' +
+      '<span class="total"><small>Total odds</small>' + Number(t.total_odds).toFixed(2) + '</span></div>' +
+      legs + codes + '</article>';
+  }
+
+  app.addEventListener('click', function(e){
+    var btn = e.target.closest('.copy');
+    if (!btn) return;
+    var text = btn.getAttribute('data-copy');
+    function ok(){ btn.textContent = 'Copied'; btn.classList.add('done'); setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, function(){});
+    else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); ok(); }catch(_){} document.body.removeChild(ta); }
+  });
+
+  if (!code){ showState('fa-link-slash', 'Link not valid', 'Open the link from your SMS, or request a new one on the home page.', true); return; }
+
+  fetch('/api/pass/tickets?p=' + encodeURIComponent(code))
+    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+    .then(function(res){
+      var d = res.d;
+      if (!res.ok){
+        if (d.error === 'expired') showState('fa-clock', 'This pass has ended', 'Your 24 hours are over. Get a new pass on the home page.', true);
+        else showState('fa-ban', 'Link not valid', 'This pass was not found or has been revoked. Use "Resend my link" on the home page.', true);
+        return;
+      }
+      startTimer(d.expires_at);
+      var html = '<h1>Today\'s tickets</h1><p class="sub">Tap Copy, then paste the code in your bookmaker app.</p>';
+      if (!d.tickets.length) html += '<div class="ticket"><div class="leg">No tickets are published yet. Check back soon.</div></div>';
+      else html += d.tickets.map(function(t){ return renderTicket(t, d.bookmakers || []); }).join('');
+      html += '<p class="disclaimer">' + esc(d.disclaimer || '') + '</p>';
+      app.innerHTML = html;
+    })
+    .catch(function(){ showState('fa-wifi', 'Could not load tickets', 'Check your connection and reload this page.', false); });
+})();
+</script>
+</body>
+</html>
