@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Boujee Sports — Sign In / Register</title>
+  <meta name="description" content="Boujee Sports: Premium picks & live tracker">
+  <link rel="icon" href="sports.png">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      border-radius: 0 !important;
+    }
+    body {
+      background: #050505;
+      color: #f7f7f7;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    h1, h2, h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.4px;
+    }
+    /* Top Bar */
+    .topbar {
+      background: #111111;
+      border-bottom: 1px solid #242424;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 60;
+    }
+    .logo-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .topbar img {
+      height: 34px;
+      width: 34px;
+      object-fit: contain;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    /* Auth Card */
+    .auth-card {
+      background: #111111;
+      border: 1px solid #242424;
+      padding: 32px 24px;
+      margin: 20px 0;
+    }
+    .auth-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .auth-header img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+    .auth-header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    /* Tabs */
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #242424;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: #9a9a9a;
+      border: none;
+      background: transparent;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+      transition: 0.2s;
+    }
+    .auth-tab.active {
+      color: #ef1b2d;
+      border-bottom: 2px solid #ef1b2d;
+    }
+    /* Forms */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #9a9a9a;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.2s;
+    }
+    .form-group input:focus {
+      border-color: #ef1b2d;
+    }
+    /* Error / Success Messages */
+    .alert {
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .alert-error {
+      background: #2a0a0a;
+      border-left: 3px solid #ef1b2d;
+      color: #ff4444;
+    }
+    .alert-success {
+      background: #0a2a0a;
+      border-left: 3px solid #2cd07e;
+      color: #2cd07e;
+    }
+    /* Buttons */
+    .btn {
+      width: 100%;
+      background: #ef1b2d;
+      color: white;
+      font-weight: 800;
+      padding: 16px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      font-family: 'Barlow Condensed', sans-serif;
+      border: 2px solid transparent;
+      transition: 0.2s;
+      margin-top: 8px;
+    }
+    .btn:hover {
+      background: #d01526;
+    }
+    .btn:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
+    /* Links */
+    .form-footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #9a9a9a;
+      font-size: 0.9rem;
+    }
+    .form-footer a {
+      color: #ef1b2d;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #9a9a9a;
+      text-decoration: none;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-link:hover {
+      color: #ef1b2d;
+    }
+    /* Loading Spinner */
+    .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px 12px;
+      color: #8a8a8a;
+      border-top: 1px solid #242424;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="logo-wrapper">
+      <img src="sports.png" alt="logo">
+      <span class="nav-brand">Boujee</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+
+    <div class="auth-card">
+      <div class="auth-header">
+        <img src="sports.png" alt="Boujee Sports">
+        <h1>Boujee Sports</h1>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Sign In</button>
+        <button class="auth-tab" data-tab="register">Register</button>
+      </div>
+
+      <!-- Error/Success Messages -->
+      <div id="authAlert" class="alert"></div>
+
+      <!-- Sign In Form -->
+      <form id="loginForm" style="display: block;">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" required placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required placeholder="Your password" autocomplete="current-password" minlength="6">
+        </div>
+        <button type="submit" class="btn" id="loginBtn">
+          <span class="btn-text">Sign In</span>
+          <span class="spinner"></span>
+        </button>
+        <div class="form-footer">
+          <a href="#" id="forgotLink">Forgot password?</a>
+        </div>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" style="display: none;">
+        <div class="form-group">
+          <label for="registerEmail">Email Address</label>
+          <input type="email" id="registerEmail" required placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Password</label>
+          <input type="password" id="registerPassword" required placeholder="Minimum 6 characters" autocomplete="new-password" minlength="6">
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" required placeholder="Re-enter password" autocomplete="new-password" minlength="6">
+        </div>
+        <button type="submit" class="btn" id="registerBtn">
+          <span class="btn-text">Create Account</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p style="margin-bottom: 10px;">© 2026 Boujee Sports. All rights reserved.</p>
+    <p><a href="/terms-policy.html" style="color:#8a8a8a;">Terms &amp; Policy</a> · <a href="/cdn-cgi/l/email-protection#11626461617e636551737e647b747462617e6365623f727e7c" style="color:#8a8a8a;"><span class="__cf_email__" data-cfemail="3f4c4a4f4f504d4b7f5d504a555a5a4c4f504d4b4c115c5052">[email&#160;protected]</span></a></p>
+  </footer>
+
+  <!-- FIREBASE MODULES -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
+    import { 
+      getAuth, 
+      createUserWithEmailAndPassword, 
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail,
+      onAuthStateChanged 
+    } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtzlIfae9EjRZyaZZfndKTBFMuM8AJJcw",
+      authDomain: "boujee-sports.firebaseapp.com",
+      projectId: "boujee-sports",
+      storageBucket: "boujee-sports.firebasestorage.app",
+      messagingSenderId: "346736321644",
+      appId: "1:346736321644:web:342d0bb713657bb2886449"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const referralCode = new URLSearchParams(window.location.search).get('ref');
+
+    // DOM Elements
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const authAlert = document.getElementById('authAlert');
+    const tabs = document.querySelectorAll('.auth-tab');
+
+    // Check if user is already logged in
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        // User is signed in, redirect to profile
+        window.location.href = '/profile.html';
+      }
+    });
+
+    // Tab Switching
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        if (tab.dataset.tab === 'login') {
+          loginForm.style.display = 'block';
+          registerForm.style.display = 'none';
+        } else {
+          loginForm.style.display = 'none';
+          registerForm.style.display = 'block';
+        }
+        
+        hideAlert();
+      });
+    });
+
+    // Alert Helper
+    function showAlert(message, type = 'error') {
+      authAlert.className = `alert alert-${type}`;
+      authAlert.textContent = message;
+      authAlert.style.display = 'block';
+    }
+
+    function hideAlert() {
+      authAlert.style.display = 'none';
+    }
+
+    // Button Loading State
+    function setLoading(btn, isLoading) {
+      const text = btn.querySelector('.btn-text');
+      const spinner = btn.querySelector('.spinner');
+      if (isLoading) {
+        btn.disabled = true;
+        if (text) text.style.display = 'none';
+        if (spinner) spinner.style.display = 'block';
+      } else {
+        btn.disabled = false;
+        if (text) text.style.display = 'inline';
+        if (spinner) spinner.style.display = 'none';
+      }
+    }
+
+    // LOGIN HANDLER
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+      
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      
+      if (!email || !password) {
+        showAlert('Please enter both email and password.');
+        return;
+      }
+      
+      if (password.length < 6) {
+        showAlert('Password must be at least 6 characters.');
+        return;
+      }
+      
+      setLoading(loginBtn, true);
+      
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        
+        // Backfill memberId for returning users (fire-and-forget, does not block redirect)
+        (async () => {
+          try {
+            const loginIdToken = await user.getIdToken();
+            await fetch('/referrals/api/referrals/session', {
+              method: 'POST',
+              headers: { 'Authorization': `Bearer ${loginIdToken}`, 'Content-Type': 'application/json' }
+            });
+          } catch (referralError) {
+            console.warn('Referral session backfill failed:', referralError);
+          }
+        })();
+        
+        // Success - redirect to profile
+        showAlert('Login successful! Redirecting...', 'success');
+        
+        setTimeout(() => {
+          window.location.href = '/profile.html';
+        }, 1000);
+        
+      } catch (error) {
+        console.error('Login error:', error);
+        
+        switch (error.code) {
+          case 'auth/invalid-email':
+            showAlert('Invalid email address format.');
+            break;
+          case 'auth/user-disabled':
+            showAlert('This account has been disabled.');
+            break;
+          case 'auth/user-not-found':
+            showAlert('No account found with this email. Please register first.');
+            break;
+          case 'auth/wrong-password':
+            showAlert('Incorrect password. Please try again.');
+            break;
+          case 'auth/too-many-requests':
+            showAlert('Too many attempts. Please try again later.');
+            break;
+          case 'auth/network-request-failed':
+            showAlert('Network error. Please check your connection and try again.');
+            break;
+          default:
+            showAlert(error.message || 'Login failed. Please try again.');
+        }
+      } finally {
+        setLoading(loginBtn, false);
+      }
+    });
+
+    // REGISTER HANDLER
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+      
+      const email = document.getElementById('registerEmail').value.trim();
+      const password = document.getElementById('registerPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Validation
+      if (!email || !password || !confirmPassword) {
+        showAlert('Please fill in all fields.');
+        return;
+      }
+      
+      if (password.length < 6) {
+        showAlert('Password must be at least 6 characters.');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showAlert('Passwords do not match.');
+        return;
+      }
+      
+      // Email format validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showAlert('Please enter a valid email address.');
+        return;
+      }
+      
+      setLoading(registerBtn, true);
+      
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        
+        // Success - create user document in Firestore via API
+        try {
+          // Get ID token for API authentication
+          const idToken = await user.getIdToken();
+          
+          // Create user in Firestore through the API Worker
+          const response = await fetch('/api/auth/session', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${idToken}`
+            }
+          });
+          
+          if (!response.ok) {
+            console.warn('User created but session setup failed:', await response.text());
+          }
+          
+          // Link referral (reuses the idToken already in scope)
+          try {
+            await fetch('/referrals/api/referrals/session', {
+              method: 'POST',
+              headers: { 'Authorization': `Bearer ${idToken}`, 'Content-Type': 'application/json' },
+              body: JSON.stringify({ referralCode })
+            });
+          } catch (referralError) {
+            console.warn('Referral session setup failed:', referralError);
+          }
+        } catch (apiError) {
+          console.warn('API session creation failed:', apiError);
+        }
+        
+        showAlert('Account created successfully! Redirecting...', 'success');
+        
+        setTimeout(() => {
+          window.location.href = '/profile.html';
+        }, 1500);
+        
+      } catch (error) {
+        console.error('Registration error:', error);
+        
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            showAlert('This email is already registered. Please sign in instead.');
+            // Switch to login tab
+            tabs[0].click();
+            break;
+          case 'auth/invalid-email':
+            showAlert('Invalid email address format.');
+            break;
+          case 'auth/weak-password':
+            showAlert('Password is too weak. Please use at least 6 characters.');
+            break;
+          case 'auth/operation-not-allowed':
+            showAlert('Email/Password authentication is not enabled. Please contact support.');
+            break;
+          case 'auth/network-request-failed':
+            showAlert('Network error. Please check your connection and try again.');
+            break;
+          default:
+            showAlert(error.message || 'Registration failed. Please try again.');
+        }
+      } finally {
+        setLoading(registerBtn, false);
+      }
+    });
+
+    // FORGOT PASSWORD HANDLER
+    document.getElementById('forgotLink').addEventListener('click', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value.trim();
+      
+      if (!email) {
+        showAlert('Please enter your email address first.');
+        return;
+      }
+      
+      hideAlert();
+      
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showAlert('Password reset email sent! Check your inbox.', 'success');
+      } catch (error) {
+        console.error('Password reset error:', error);
+        showAlert(error.message || 'Could not send reset email. Please try again.');
+      }
+    });
+  </script>
+</body>
+</html>
