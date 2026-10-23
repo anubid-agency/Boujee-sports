@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Boujee Sports — Premium picks &amp; live tracker</title>
+<meta name="description" content="Structured betting, transparent tracker, bankroll tools. Free picks, VIP membership." />
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://boujeesports.com/">
+<meta property="og:title" content="Boujee Sports">
+<meta property="og:description" content="Transparent record, sharp picks, free daily selection.">
+<meta property="og:image" content="https://boujeesports.com/open.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:title" content="Boujee Sports">
+<meta property="twitter:description" content="Transparent record, sharp picks, free daily selection.">
+<meta property="twitter:image" content="https://boujeesports.com/open.jpg">
+
+<link rel="icon" href="sports.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#050505; --panel:#111111; --panel2:#171717; --line:#242424;
+  --text:#f7f7f7; --muted:#8a8a8a; --red:#ef1b2d; --green:#2fbf71; --amber:#ffb020;
+
+  --font-main:
+    -apple-system, BlinkMacSystemFont,
+    'SF Pro Display', 'SF Pro Text',
+    'Helvetica Neue', Helvetica, Arial,
+    'Inter', system-ui, sans-serif;
+
+  --font-display: var(--font-main);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;border-radius:0!important}
+
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-main);
+  line-height:1.5;padding-bottom:95px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1000px;margin:0 auto;padding:0 18px}
+
+h1,h2,h3,.stat-number,.pick-odds,.time-ago{
+  font-family:var(--font-display);
+  letter-spacing:-.01em;
+}
+h1,h2,h3{font-weight:800}
+
+/* topbar */
+.topbar{background:#111;border-bottom:1px solid var(--line);padding:12px 0;position:sticky;top:0;z-index:60;backdrop-filter:blur(10px)}
+.topbar-inner{display:flex;align-items:center;justify-content:space-between}
+.logo-wrap{display:flex;align-items:center;gap:10px}
+.logo-wrap img{width:34px;height:34px}
+.logo-wrap span{font-family:var(--font-display);font-weight:900;font-size:20px;text-transform:uppercase;letter-spacing:-.02em}
+.logo-wrap span i{color:var(--red);font-style:normal}
+.auth-link{font-family:var(--font-main);color:var(--red);font-weight:700;background:#1a1a1a;padding:9px 14px;border:1px solid var(--red);font-size:.9rem}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:14px 20px;
+  font-weight:700;font-family:var(--font-display);font-size:.95rem;
+  text-transform:uppercase;letter-spacing:.02em;border:2px solid transparent;cursor:pointer;
+}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:#d01526}
+.btn-red:disabled{opacity:.6;cursor:not-allowed}
+.btn-outline{background:transparent;border-color:#3a3a3a;color:#fff}
+.btn-outline:hover{border-color:var(--red)}
+
+/* hero */
+.hero{padding:48px 0 32px;border-bottom:1px solid var(--line);background:linear-gradient(to right, rgba(0,0,0,.88), rgba(0,0,0,.75)), url('hero.jpg') center/cover no-repeat}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:start}
+.eyebrow{font-family:var(--font-main);color:var(--red);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.hero h1{font-size:clamp(34px,5vw,54px);line-height:1.05;margin:12px 0 14px;letter-spacing:-.03em}
+.hero p{color:#c7c7c7;max-width:520px;font-size:1.05rem}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.micro{margin-top:12px;color:#777;font-size:12px}
+
+.project-card{background:var(--panel2);border:1px solid #343434;padding:22px}
+.project-title{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.project-title h2{font-size:26px}
+.live-badge{display:inline-flex;gap:7px;align-items:center;color:#fff;background:#2a0e0e;border:1px solid #572020;padding:7px 10px;font-size:11px;font-weight:800;font-family:var(--font-main);letter-spacing:.08em}
+.dot{width:7px;height:7px;background:var(--red)}
+.big-stat{font-family:var(--font-display);font-size:38px;font-weight:800;margin:20px 0 3px;letter-spacing:-.03em}
+.label{font-family:var(--font-main);font-size:11px;color:#868686;text-transform:uppercase;letter-spacing:.1em}
+.progress{height:12px;background:#232323;overflow:hidden;margin:16px 0 6px}
+.progress>div{height:100%;background:linear-gradient(90deg,var(--red),#ff6a55)}
+.progress-meta{display:flex;justify-content:space-between;color:#a4a4a4;font-size:12px}
+.progress-meta strong{color:#fff;font-family:var(--font-display)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.kpi{background:#0d0d0d;border:1px solid #252525;padding:12px}
+.kpi strong{display:block;font-family:var(--font-display);font-size:16px;margin-top:4px}
+
+/* sections */
+section.sec{padding:40px 0;border-bottom:1px solid var(--line)}
+.section-head{margin-bottom:20px}
+.section-head h2{font-size:28px;margin-bottom:6px;letter-spacing:-.02em}
+.section-head p{color:var(--muted);max-width:560px;line-height:1.6;font-size:.9rem}
+
+/* free pick / cards */
+.card{background:var(--panel);border:1px solid var(--line);padding:18px}
+.free-pick{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.pick-teams{font-family:var(--font-display);font-size:20px;font-weight:800}
+.pick-meta-line{color:var(--muted);font-size:12px;margin-top:5px}
+
+/* table */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);background:#0f0f0f}
+table{width:100%;border-collapse:collapse;min-width:640px;font-family:var(--font-main)}
+th,td{padding:13px 14px;border-bottom:1px solid #202020;text-align:left;font-size:13px}
+th{color:#8f8f8f;font-size:11px;text-transform:uppercase;letter-spacing:.08em;background:#121212;font-family:var(--font-main)}
+.win{color:var(--green);font-weight:700}
+.loss{color:#ff6767;font-weight:700}
+.pending{color:var(--amber);font-weight:700}
+
+/* calculator */
+.calculator{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.calc-box{background:var(--panel);border:1px solid var(--line);padding:20px}
+.calc-box input{
+  width:100%;background:#090909;border:1px solid #343434;color:#fff;
+  padding:14px;font-size:19px;font-weight:700;margin-top:8px;
+  font-family:var(--font-main);
+}
+.calc-results{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.calc-result{background:#090909;border:1px solid #2a2a2a;padding:14px}
+.calc-result strong{font-family:var(--font-display);font-size:20px;display:block;margin-top:6px}
+
+/* strategy */
+.strategy{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.strategy .card p{color:#a6a6a6;line-height:1.5;font-size:.88rem;margin-top:6px}
+.number{font-family:var(--font-display);font-size:28px;font-weight:900;color:var(--red);letter-spacing:-.02em}
+
+/* vip */
+.vip{background:linear-gradient(135deg,#1e0606,#111 55%);border:1px solid #4e1b1b;padding:26px;display:grid;grid-template-columns:1.15fr .85fr;gap:20px}
+.price{font-family:var(--font-display);font-size:42px;font-weight:900;letter-spacing:-.03em}
+.price span{font-family:var(--font-main);font-size:14px;color:#a7a7a7;font-weight:500}
+.ticks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:18px 0}
+.tick{color:#d7d7d7;font-size:.88rem;font-family:var(--font-main)}
+.tick i{color:var(--green);margin-right:6px}
+.vip-side{background:#0c0c0c;border:1px solid #2a2a2a;padding:18px}
+.vip-side p{color:#999;line-height:1.6;font-size:.88rem;margin-bottom:14px}
+
+/* channel */
+.post{border:1px solid var(--line);background:var(--panel);padding:16px;margin-bottom:12px}
+.post.locked p{filter:blur(3px)}
+.locked-cta{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+/* history */
+.history{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.month-card{background:var(--panel);border:1px solid var(--line);padding:16px}
+.month-card .p{font-family:var(--font-display);font-size:22px;font-weight:800;margin:8px 0}
+
+/* skeleton */
+.skeleton{background:linear-gradient(90deg,var(--panel) 25%,var(--panel2) 37%,var(--panel) 63%);background-size:400% 100%;animation:sk 1.4s ease infinite}
+@keyframes sk{0%{background-position:100% 50%}100%{background-position:0 50%}}
+
+/* cookie + nav + footer */
+.cookie-banner{position:fixed;bottom:85px;left:16px;right:16px;background:#111;border:1px solid var(--red);padding:20px;z-index:220;max-width:600px;margin:0 auto;display:none}
+.cookie-banner.show{display:block}
+.cookie-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.cookie-header img{width:36px;height:36px;background:#fff;padding:4px}
+.cookie-header h3{font-size:1.3rem;color:var(--red)}
+.cookie-text{color:#cfcfcf;font-size:.85rem;margin-bottom:16px;line-height:1.5}
+.cookie-actions{display:flex;gap:10px;flex-wrap:wrap}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#101010;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 8px;z-index:150}
+.nav-item{display:flex;flex-direction:column;align-items:center;color:var(--muted);font-size:.75rem;gap:5px;font-family:var(--font-main)}
+.nav-item i{font-size:1.3rem}
+.nav-item.active{color:var(--red)}
+footer{padding:30px 0 20px;color:#7f7f7f;font-size:.85rem;border-top:1px solid var(--line)}
+footer a{color:#f7f7f7}
+.hidden{display:none!important}
+
+/* =====================================================
+   PAYMENT MODAL
+   ===================================================== */
+.pay-modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);
+  z-index:500;display:none;align-items:center;justify-content:center;
+  padding:16px;backdrop-filter:blur(6px);
+  animation:payFadeIn .2s ease;
+}
+.pay-modal-overlay.show{display:flex}
+@keyframes payFadeIn{from{opacity:0}to{opacity:1}}
+
+.pay-modal{
+  background:#111;border:1px solid var(--line);
+  max-width:440px;width:100%;padding:28px 24px 22px;
+  position:relative;max-height:calc(100vh - 32px);overflow-y:auto;
+  border-left:4px solid var(--red);
+  animation:paySlideUp .25s ease;
+}
+@keyframes paySlideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.pay-close{
+  position:absolute;top:10px;right:10px;
+  background:transparent;border:none;color:#777;
+  font-size:1.6rem;line-height:1;cursor:pointer;
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+}
+.pay-close:hover{color:var(--red);background:#1a1a1a}
+
+.pay-header{text-align:center;margin-bottom:20px}
+.pay-header img{width:52px;height:52px;object-fit:contain;margin-bottom:10px}
+.pay-header h2{
+  font-size:1.6rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:-.01em;margin-bottom:8px;color:#fff;
+}
+.pay-header p{color:#a5a5a5;font-size:.9rem;line-height:1.5;max-width:340px;margin:0 auto}
+.pay-header p strong{color:#fff}
+
+.pay-price-line{
+  background:#0a0a0a;border:1px solid #2a2a2a;
+  padding:16px;text-align:center;margin-bottom:18px;
+}
+.pay-price{
+  display:block;font-family:var(--font-display);
+  font-size:2rem;font-weight:900;color:var(--red);
+  letter-spacing:-.02em;line-height:1.1;
+}
+.pay-price-sub{
+  display:block;color:#8a8a8a;font-size:.75rem;
+  text-transform:uppercase;letter-spacing:.08em;margin-top:4px;
+}
+
+.pay-input-group{margin-bottom:14px}
+.pay-input-group label{
+  display:block;color:#9a9a9a;font-size:.78rem;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;
+}
+.pay-input-group input{
+  width:100%;background:#1a1a1a;border:1px solid #2a2a2a;
+  color:#fff;padding:14px;font-size:1rem;font-family:var(--font-main);
+  outline:none;transition:border-color .2s;
+}
+.pay-input-group input:focus{border-color:var(--red)}
+.pay-input-hint{color:#6a6a6a;font-size:.75rem;margin-top:6px}
+
+.pay-cta{
+  width:100%;justify-content:center;
+  padding:16px 20px;font-size:1.05rem;
+  margin-top:4px;
+}
+
+.pay-alert{
+  margin-top:14px;padding:10px 12px;
+  font-size:.85rem;line-height:1.4;
+}
+.pay-alert.err{background:#2a0a0a;border-left:3px solid var(--red);color:#ff6b6b}
+.pay-alert.ok{background:#0a2a0a;border-left:3px solid var(--green);color:var(--green)}
+
+.pay-footer{
+  margin-top:16px;padding-top:14px;
+  border-top:1px solid #1e1e1e;text-align:center;
+}
+.pay-footer a{
+  color:#a5a5a5;font-size:.82rem;
+  text-decoration:underline;text-decoration-color:#333;
+}
+.pay-footer a:hover{color:var(--red);text-decoration-color:var(--red)}
+
+.pay-disclaimer{
+  text-align:center;color:#666;font-size:.72rem;
+  margin-top:14px;line-height:1.4;
+}
+
+/* verifying state */
+.pay-verify{text-align:center;padding:14px 0}
+.pay-spinner{
+  width:44px;height:44px;margin:10px auto 18px;
+  border:3px solid #2a2a2a;border-top-color:var(--red);
+  animation:paySpin 1s linear infinite;
+}
+@keyframes paySpin{to{transform:rotate(360deg)}}
+.pay-verify h3{
+  font-size:1.2rem;text-transform:uppercase;
+  letter-spacing:.02em;margin-bottom:8px;color:#fff;
+}
+.pay-verify p{color:#999;font-size:.85rem;line-height:1.5}
+
+/* done state */
+.pay-done{text-align:center;padding:14px 0}
+.pay-done .icon-ok{
+  width:52px;height:52px;margin:0 auto 16px;
+  background:#0a2a0a;border:1px solid var(--green);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--green);font-size:1.6rem;
+}
+.pay-done h3{
+  font-size:1.2rem;text-transform:uppercase;color:#fff;
+  margin-bottom:8px;
+}
+.pay-done p{color:#999;font-size:.85rem;line-height:1.5}
+
+@media(max-width:850px){
+  .hero-grid,.calculator,.vip{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .history{grid-template-columns:1fr}
+  .strategy{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .pay-modal{padding:22px 18px 18px}
+  .pay-header h2{font-size:1.4rem}
+  .pay-price{font-size:1.7rem}
+}
+</style>
+</head>
+<body>
+<noscript><div style="background:#ef1b2d;padding:20px;text-align:center;color:#fff;">Please enable JavaScript to view Boujee Sports content.</div></noscript>
+
+<div class="topbar"><div class="wrap topbar-inner">
+  <div class="logo-wrap"><img src="sports.png" alt="Boujee Sports logo"><span>Boujee<i>Sports</i></span></div>
+  <a href="/signin.html" id="authLink" class="auth-link">Sign in</a>
+</div></div>
+
+<main>
+<!-- HERO -->
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    <div class="eyebrow">Structured betting. Tracked results.</div>
+    <h1>A staking system with a public, provable record.</h1>
+    <p>Follow the Odd 2 and Odd 3 categories, manage your bankroll with clear staking rules, and see every result - win or loss - through Boujee Sports.</p>
+    <div class="cta-row">
+      <a href="#tracker" class="btn btn-red">View live tracker</a>
+      <a href="#free" class="btn btn-outline">See today's free pick</a>
+    </div>
+    <div class="micro">18+ &middot; Betting involves financial risk &middot; No guaranteed returns</div>
+  </div>
+  <div class="project-card">
+    <div class="project-title">
+      <div><div class="label">Current project</div><h2>Project 1M</h2></div>
+      <span class="live-badge"><span class="dot"></span> LIVE</span>
+    </div>
+    <div id="projectSkel" class="skeleton" style="height:120px;margin-top:16px;"></div>
+    <div id="projectBox" class="hidden"></div>
+  </div>
+</div></section>
+
+<!-- FREE PICK -->
+<section class="sec" id="free"><div class="wrap">
+  <div class="section-head"><div class="eyebrow">Free value first</div><h2>Today's free pick</h2><p>See the model at work before you commit to anything.</p></div>
+  <div id="pickSkel" class="card skeleton" style="height:90px;"></div>
+  <div id="pickBox" class="hidden"></div>
+</div></section>
+
+<!-- LIVE TRACKER -->
+<section class="sec" id="tracker"><div class="wrap">
+  <div class="section-head"><div class="eyebrow">Transparency</div><h2>Live performance tracker</h2><p>Wins and losses stay visible. Nothing gets deleted.</p></div>
+  <div id="trackerSkel" class="skeleton" style="height:160px;"></div>
+  <div id="trackerBox" class="hidden table-wrap"></div>
+</div></section>
+
+<!-- CALCULATOR -->
+<section class="sec" id="calculator"><div class="wrap calculator">
+  <div class="calc-box">
+    <div class="eyebrow">Bankroll tool</div>
+    <h2 style="font-size:26px;margin:10px 0">Know your stake before you play.</h2>
+    <p style="color:#9c9c9c;font-size:.88rem;line-height:1.6">Enter your bankroll to see both the conservative and standard allocation.</p>
+    <label class="label">Your bankroll (UGX)</label>
+    <input id="bankroll" type="number" value="1000000" min="0" step="10000" />
+  </div>
+  <div class="calc-box">
+    <div class="label">Recommended allocations</div>
+    <div class="calc-results">
+      <div class="calc-result"><span class="label">1% Conservative</span><strong id="oneOut">UGX 10,000</strong></div>
+      <div class="calc-result"><span class="label">3.33% Standard</span><strong id="threeOut">UGX 33,300</strong></div>
+    </div>
+    <div style="margin-top:16px;color:#8f8f8f;font-size:12px;line-height:1.6">A planning tool, not a guarantee of profit. Only stake money you can afford to lose.</div>
+  </div>
+</div></section>
+
+<!-- THE SYSTEM -->
+<section class="sec"><div class="wrap">
+  <div class="section-head"><div class="eyebrow">The system</div><h2>Simple rules. Clear categories.</h2><p>The two ticket targets and two staking rules that every result on this site is tracked against.</p></div>
+  <div class="strategy">
+    <div class="card"><div class="number">ODD 2</div><h3>Lower target category</h3><p>Tracked independently so the two categories are never merged into one blended record.</p></div>
+    <div class="card"><div class="number">ODD 3</div><h3>Higher target category</h3><p>Its own separate record, shown alongside Odd 2 rather than combined with it.</p></div>
+    <div class="card"><div class="number">1%</div><h3>Conservative allocation</h3><p>A smaller bankroll percentage per ticket for lower exposure.</p></div>
+    <div class="card"><div class="number">3.33%</div><h3>Standard allocation</h3><p>The default fixed bankroll percentage per ticket.</p></div>
+  </div>
+</div></section>
+
+<!-- VIP -->
+<section class="sec" id="vip"><div class="wrap">
+  <div class="vip">
+    <div>
+      <div class="eyebrow">Boujee Sports VIP</div>
+      <div class="price">UGX 25,000 <span>/ month</span></div>
+      <p style="color:#b0b0b0;font-size:.92rem;line-height:1.6;max-width:500px;margin-top:10px">One membership for the complete daily system, full tracking, and the private community.</p>
+      <div class="ticks">
+        <div class="tick"><i class="fa-solid fa-check"></i>Odd 2 daily selections</div>
+        <div class="tick"><i class="fa-solid fa-check"></i>Odd 3 daily selections</div>
+        <div class="tick"><i class="fa-solid fa-check"></i>Full performance tracker</div>
+        <div class="tick"><i class="fa-solid fa-check"></i>Bankroll calculator</div>
+        <div class="tick"><i class="fa-solid fa-check"></i>Project 1M access</div>
+        <div class="tick"><i class="fa-solid fa-check"></i>Private WhatsApp community</div>
+      </div>
+      <a href="/signin.html" class="btn btn-red">Join VIP &mdash; UGX 25,000</a>
+    </div>
+    <div class="vip-side">
+      <h3 style="font-size:1.3rem;margin-bottom:8px">Start free first</h3>
+      <p>Create a free account to see the public tracker and follow Project 1M. Upgrade only when you're ready.</p>
+      <a href="/signin.html" class="btn btn-outline" style="width:100%;justify-content:center">Create free account</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- CHANNEL -->
+<section class="sec" id="channel"><div class="wrap">
+  <div class="section-head"><div class="eyebrow">Community</div><h2>Boujee Sports Channel</h2><p>Updates, screenshots and announcements.</p></div>
+  <div id="chanSkel"><div class="card skeleton" style="height:80px;margin-bottom:12px"></div><div class="card skeleton" style="height:80px;"></div></div>
+  <div id="chanBox" class="hidden"></div>
+</div></section>
+
+<!-- LONG-TERM TRUST -->
+<section class="sec"><div class="wrap">
+  <div class="section-head"><div class="eyebrow">Long-term trust</div><h2>Performance history</h2><p>Every tracked month stays on the record, win or lose.</p></div>
+  <div id="historySkel" class="history">
+    <div class="month-card skeleton" style="height:100px;"></div>
+    <div class="month-card skeleton" style="height:100px;"></div>
+    <div class="month-card skeleton" style="height:100px;"></div>
+  </div>
+  <div id="historyBox" class="hidden history"></div>
+</div></section>
+</main>
+
+<!-- =====================================================
+     PAYMENT MODAL
+     ===================================================== -->
+<div class="pay-modal-overlay" id="payModal" role="dialog" aria-modal="true" aria-labelledby="payModalTitle">
+  <div class="pay-modal">
+    <button class="pay-close" id="payClose" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div class="pay-header">
+      <img src="sports.png" alt="Boujee Sports">
+      <h2 id="payModalTitle">Unlock today's tickets</h2>
+      <p>Pay once to access today's selections for <strong><span id="payHours">24</span> hours</strong>. Delivered instantly by SMS.</p>
+    </div>
+
+    <!-- PAY STATE -->
+    <div id="payStatePay">
+      <div class="pay-price-line">
+        <span class="pay-price" id="payPrice">UGX 1,000</span>
+        <span class="pay-price-sub">One-time payment</span>
+      </div>
+
+      <div class="pay-input-group">
+        <label for="payPhone">Phone number</label>
+        <input type="tel" id="payPhone" placeholder="0772 123 456" maxlength="16" autocomplete="tel" inputmode="tel">
+        <div class="pay-input-hint">Ugandan MTN or Airtel number. The pass link is sent here by SMS.</div>
+      </div>
+
+      <button class="btn btn-red pay-cta" id="payBtn" type="button">
+        Pay <span id="payBtnAmount">UGX 1,000</span> Now
+      </button>
+
+      <div id="payAlert" class="pay-alert hidden"></div>
+
+      <div class="pay-footer">
+        <a href="#" id="resendLink">Already paid? Resend my link</a>
+      </div>
+
+      <div class="pay-disclaimer" id="payDisclaimer">18+ only. Betting involves risk. Odds may change.</div>
+    </div>
+
+    <!-- VERIFY STATE -->
+    <div id="payStateVerify" class="hidden">
+      <div class="pay-verify">
+        <div class="pay-spinner"></div>
+        <h3>Verifying your payment</h3>
+        <p>Please wait and do not close this page. This usually takes a few seconds.</p>
+      </div>
+    </div>
+
+    <!-- DONE STATE -->
+    <div id="payStateDone" class="hidden">
+      <div class="pay-done">
+        <div class="icon-ok"><i class="fa-solid fa-check"></i></div>
+        <h3>Payment confirmed</h3>
+        <p>Redirecting you to today's tickets...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-header"><img src="cookie.png" alt=""><h3>We value your privacy</h3></div>
+  <div class="cookie-text">We use cookies to remember your sign-in and preferences. See our <a href="/terms-policy.html" style="color:#fff">terms &amp; policy</a>.</div>
+  <div class="cookie-actions">
+    <button id="acceptCookie" class="btn btn-red">Accept</button>
+    <button id="rejectCookie" class="btn btn-outline">Reject</button>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+  <a href="#channel" class="nav-item"><i class="fa-solid fa-tower-broadcast"></i><span>Channel</span></a>
+  <a href="#tracker" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Tracker</span></a>
+  <a href="/signin.html" id="navAccount" class="nav-item"><i class="fa-solid fa-user"></i><span>Account</span></a>
+</nav>
+
+<footer><div class="wrap">
+  <p><a href="/terms-policy.html">Terms &amp; Policy</a> &middot; <a href="/cdn-cgi/l/email-protection#63101613130c111723010c1609060610130c1117104d000c0e"><span class="__cf_email__" data-cfemail="6d1e181d1d021f192d0f02180708081e1d021f191e430e0200">[email&#160;protected]</span></a></p>
+  <p style="margin:12px 0">Betting involves financial risk and is intended for adults only.</p>
+  <p>Illustrations by <a href="https://storyset.com" target="_blank" rel="noopener">Storyset</a></p>
+</div></footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDtzlIfae9EjRZyaZZfndKTBFMuM8AJJcw",
+  authDomain: "boujee-sports.firebaseapp.com",
+  projectId: "boujee-sports",
+  storageBucket: "boujee-sports.firebasestorage.app",
+  messagingSenderId: "346736321644",
+  appId: "1:346736321644:web:342d0bb713657bb2886449"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const PROJECT_TARGET = 1000000;
+const PASS_API = '/api/pass';
+
+/* =========================================================
+   PAYMENT FLOW (public daily pass — 1000 UGX)
+   ========================================================= */
+const payModal = document.getElementById('payModal');
+const payClose = document.getElementById('payClose');
+const payStatePay = document.getElementById('payStatePay');
+const payStateVerify = document.getElementById('payStateVerify');
+const payStateDone = document.getElementById('payStateDone');
+const payPhone = document.getElementById('payPhone');
+const payBtn = document.getElementById('payBtn');
+const payAlert = document.getElementById('payAlert');
+const payPrice = document.getElementById('payPrice');
+const payBtnAmount = document.getElementById('payBtnAmount');
+const payHours = document.getElementById('payHours');
+const payDisclaimer = document.getElementById('payDisclaimer');
+
+let passInfo = { price: 1000, pass_hours: 24, disclaimer: '18+ only. Betting involves risk.' };
+let pollingActive = false;
+
+function fmtUGX(n) {
+  return 'UGX ' + Number(n || 0).toLocaleString('en-US');
+}
+
+function showPayAlert(msg, kind) {
+  payAlert.textContent = msg;
+  payAlert.className = 'pay-alert ' + (kind === 'ok' ? 'ok' : 'err');
+  payAlert.classList.remove('hidden');
+}
+function hidePayAlert() {
+  payAlert.classList.add('hidden');
+}
+
+function setPayState(state) {
+  payStatePay.classList.add('hidden');
+  payStateVerify.classList.add('hidden');
+  payStateDone.classList.add('hidden');
+  if (state === 'pay') payStatePay.classList.remove('hidden');
+  if (state === 'verify') payStateVerify.classList.remove('hidden');
+  if (state === 'done') payStateDone.classList.remove('hidden');
+  // Close button only available in 'pay' state (avoid abandoning during verify)
+  payClose.style.display = state === 'pay' ? 'flex' : 'none';
+}
+
+function openPayModal() {
+  payModal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closePayModal() {
+  payModal.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+payClose.addEventListener('click', closePayModal);
+
+// Phone normalization (client-side lightweight check, mirrors worker's normPhone)
+function normalizePhone(input) {
+  let d = String(input || '').replace(/\D/g, '');
+  if (d.startsWith('256')) d = d.slice(3);
+  else if (d.startsWith('0')) d = d.slice(1);
+  return /^7\d{8}$/.test(d) ? d : null;
+}
+
+// Update UI with latest info
+async function loadPassInfo() {
+  try {
+    const res = await fetch(PASS_API + '/info');
+    if (!res.ok) throw new Error('info failed');
+    const data = await res.json();
+    if (data && typeof data.price !== 'undefined') {
+      passInfo.price = Number(data.price);
+      passInfo.pass_hours = Number(data.pass_hours);
+      if (data.disclaimer) passInfo.disclaimer = data.disclaimer;
+    }
+  } catch (e) {
+    // Fallback defaults remain
+  }
+  payPrice.textContent = fmtUGX(passInfo.price);
+  payBtnAmount.textContent = fmtUGX(passInfo.price);
+  payHours.textContent = String(passInfo.pass_hours);
+  if (payDisclaimer) payDisclaimer.textContent = passInfo.disclaimer;
+}
+
+// Start payment
+payBtn.addEventListener('click', async () => {
+  hidePayAlert();
+  const raw = payPhone.value.trim();
+  const phone = normalizePhone(raw);
+  if (!phone) {
+    showPayAlert('Enter a valid Ugandan number, e.g. 0772123456.');
+    payPhone.focus();
+    return;
+  }
+
+  payBtn.disabled = true;
+  const originalLabel = payBtn.innerHTML;
+  payBtn.innerHTML = 'Starting payment...';
+
+  try {
+    const res = await fetch(PASS_API + '/start', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ phone })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.redirect_url) {
+      throw new Error(data.error || 'Could not start payment. Please try again.');
+    }
+    // Send to Pesapal. Callback returns to /?pass_order=<id>
+    window.location.href = data.redirect_url;
+  } catch (err) {
+    showPayAlert(err.message || 'Network error. Please try again.');
+    payBtn.disabled = false;
+    payBtn.innerHTML = originalLabel;
+  }
+});
+
+// Resend link
+document.getElementById('resendLink').addEventListener('click', async (e) => {
+  e.preventDefault();
+  hidePayAlert();
+  const raw = payPhone.value.trim();
+  const phone = normalizePhone(raw);
+  if (!phone) {
+    showPayAlert('Enter the phone number you paid with, then tap Resend.');
+    payPhone.focus();
+    return;
+  }
+  try {
+    const res = await fetch(PASS_API + '/resend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ phone })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Could not send link.');
+    showPayAlert(data.message || 'If that number has an active pass, the link has been sent by SMS.', 'ok');
+  } catch (err) {
+    showPayAlert(err.message || 'Network error. Please try again.');
+  }
+});
+
+// Poll order status
+async function pollOrderStatus(orderId) {
+  if (pollingActive) return;
+  pollingActive = true;
+  setPayState('verify');
+  openPayModal();
+
+  const maxAttempts = 60; // ~2 minutes
+  for (let i = 0; i < maxAttempts; i++) {
+    try {
+      const res = await fetch(PASS_API + '/status?order=' + encodeURIComponent(orderId));
+      const data = await res.json().catch(() => ({}));
+      if (data && data.status === 'paid' && data.pass) {
+        pollingActive = false;
+        setPayState('done');
+        // Clean the URL then redirect to the pass page
+        try { history.replaceState({}, '', '/'); } catch (_) {}
+        setTimeout(() => {
+          window.location.href = '/pass.html?p=' + encodeURIComponent(data.pass);
+        }, 1200);
+        return;
+      }
+      if (data && data.status === 'failed') {
+        pollingActive = false;
+        setPayState('pay');
+        showPayAlert('Payment failed or was cancelled. You can try again.');
+        try { history.replaceState({}, '', '/'); } catch (_) {}
+        return;
+      }
+    } catch (_) {
+      // Keep polling on transient errors
+    }
+    await new Promise(r => setTimeout(r, 2000));
+  }
+
+  pollingActive = false;
+  setPayState('pay');
+  showPayAlert('Payment is taking longer than expected. If you were charged, check your SMS for the link or use "Resend my link".');
+  try { history.replaceState({}, '', '/'); } catch (_) {}
+}
+
+// Init payment modal based on URL / state
+async function initPaymentModal() {
+  await loadPassInfo();
+
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get('pass_order');
+
+  if (orderId) {
+    pollOrderStatus(orderId);
+    return;
+  }
+
+  // Show the pay prompt on every entry
+  setPayState('pay');
+  openPayModal();
+}
+
+// Allow re-opening via CTA if user closes it
+document.querySelectorAll('[data-open-pay]').forEach(el => {
+  el.addEventListener('click', (e) => { e.preventDefault(); setPayState('pay'); openPayModal(); });
+});
+
+// ESC closes (only when not verifying)
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && payModal.classList.contains('show') && !payStateVerify.classList.contains('hidden') === false) {
+    // no-op
+  }
+});
+
+/* =========================================================
+   PAGE DATA (posts / tracker / channel / history)
+   ========================================================= */
+function escapeHtml(str){ const d=document.createElement('div'); d.textContent = str ?? ''; return d.innerHTML; }
+function money(n){ return 'UGX ' + Math.round(n).toLocaleString('en-US'); }
+function timeAgo(iso){
+  if(!iso) return '';
+  const mins = Math.floor((Date.now() - new Date(iso).getTime())/60000);
+  if(mins<60) return mins+'m ago';
+  const h = Math.floor(mins/60);
+  if(h<24) return h+'h ago';
+  return Math.floor(h/24)+'d ago';
+}
+function pickProfit(p){
+  const odds = parseFloat(p.result?.odds);
+  const stake = parseFloat(p.result?.stake);
+  if (isNaN(odds) || isNaN(stake)) return 0;
+  if (p.result?.outcome === 'won') return stake * (odds - 1);
+  if (p.result?.outcome === 'lost') return -stake;
+  return 0;
+}
+
+onAuthStateChanged(auth, user => {
+  const authLink = document.getElementById('authLink');
+  const navAccount = document.getElementById('navAccount');
+  if (user) {
+    authLink.textContent = 'My account';
+    authLink.href = '/profile.html';
+    navAccount.href = '/profile.html';
+  }
+  loadData(!!user);
+});
+
+async function fetchPosts(){
+  const headers = {};
+  if (auth.currentUser) headers.Authorization = `Bearer ${await auth.currentUser.getIdToken()}`;
+  const r = await fetch('/api/posts', { headers });
+  return r.json();
+}
+async function fetchSummary(){
+  const r = await fetch('/api/results/summary');
+  return r.json();
+}
+
+async function loadData(){
+  try {
+    const [{ posts = [] }, summary] = await Promise.all([fetchPosts(), fetchSummary()]);
+    renderProject(posts);
+    renderPick(posts);
+    renderTracker(posts);
+    renderChannel(posts);
+    renderHistory(posts);
+  } catch (err) {
+    console.error('Failed to load page data:', err);
+    // Ensure skeletons clear so page is usable
+    ['projectSkel','pickSkel','trackerSkel','chanSkel','historySkel'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.classList.add('hidden');
+    });
+  }
+}
+
+function renderProject(posts){
+  const picks = posts.filter(p => p.type === 'pick' && p.result && p.result.outcome !== 'pending');
+  const totalProfit = picks.reduce((sum, p) => sum + pickProfit(p), 0);
+  const odd2 = picks.filter(p => String(p.result.odds).includes('2'));
+  const odd3 = picks.filter(p => String(p.result.odds).includes('3'));
+  const w2 = odd2.filter(p => p.result.outcome === 'won').length;
+  const l2 = odd2.filter(p => p.result.outcome === 'lost').length;
+  const w3 = odd3.filter(p => p.result.outcome === 'won').length;
+  const l3 = odd3.filter(p => p.result.outcome === 'lost').length;
+  const pct = Math.max(0, Math.min(100, (totalProfit / PROJECT_TARGET) * 100));
+
+  document.getElementById('projectSkel').classList.add('hidden');
+  const box = document.getElementById('projectBox');
+  box.classList.remove('hidden');
+  box.innerHTML = `
+    <div class="big-stat">${money(totalProfit)}</div><div class="label">Current profit</div>
+    <div class="progress"><div style="width:${pct}%"></div></div>
+    <div class="progress-meta"><span>Target: ${money(PROJECT_TARGET)}</span><strong>${pct.toFixed(0)}%</strong></div>
+    <div class="kpis">
+      <div class="kpi"><span class="label">Odd 2</span><strong>${w2}W &mdash; ${l2}L</strong></div>
+      <div class="kpi"><span class="label">Odd 3</span><strong>${w3}W &mdash; ${l3}L</strong></div>
+      <div class="kpi"><span class="label">Tracking</span><strong>Every ticket</strong></div>
+    </div>
+  `;
+}
+
+function renderPick(posts){
+  document.getElementById('pickSkel').classList.add('hidden');
+  const box = document.getElementById('pickBox');
+  box.classList.remove('hidden');
+  const pick = posts.find(p => p.type === 'pick' && p.tier === 'free');
+  if (!pick) { box.innerHTML = `<div class="card">No free pick available today. Check back later.</div>`; return; }
+  const o = pick.result?.outcome || 'pending';
+  const cls = o === 'won' ? 'win' : o === 'lost' ? 'loss' : 'pending';
+  box.innerHTML = `
+    <div class="card free-pick">
+      <div>
+        <div class="label">Today &middot; Free selection</div>
+        <div class="pick-teams">${escapeHtml(pick.body || '')}</div>
+        <div class="pick-meta-line">Odds: ${escapeHtml(String(pick.result?.odds ?? '—'))} &middot; <span class="${cls}">${o.toUpperCase()}</span> &middot; ${timeAgo(pick.createdAt)}</div>
+      </div>
+      <a href="#tracker" class="btn btn-red">See record</a>
+    </div>
+  `;
+}
+
+function renderTracker(posts){
+  document.getElementById('trackerSkel').classList.add('hidden');
+  const box = document.getElementById('trackerBox');
+  box.classList.remove('hidden');
+  const picks = posts.filter(p => p.type === 'pick' && p.result).slice(0, 8);
+  if (!picks.length) { box.innerHTML = `<div class="card">No results recorded yet.</div>`; return; }
+
+  let running = 0;
+  const rows = picks.slice().reverse().map(p => {
+    const profit = pickProfit(p);
+    running += profit;
+    const o = p.result.outcome || 'pending';
+    const cls = o === 'won' ? 'win' : o === 'lost' ? 'loss' : 'pending';
+    return `<tr>
+      <td>${timeAgo(p.createdAt)}</td>
+      <td>${escapeHtml(String(p.result.odds ?? '—'))}</td>
+      <td>${escapeHtml(String(p.result.stake ?? '—'))}</td>
+      <td class="${cls}">${o.toUpperCase()}</td>
+      <td class="${profit >= 0 ? 'win' : 'loss'}">${profit ? (profit>0?'+':'') + Math.round(profit).toLocaleString('en-US') : '—'}</td>
+      <td>${Math.round(running).toLocaleString('en-US')}</td>
+    </tr>`;
+  }).reverse().join('');
+
+  box.innerHTML = `<table><thead><tr><th>When</th><th>Odds</th><th>Stake</th><th>Result</th><th>P/L</th><th>Cumulative</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function renderChannel(posts){
+  document.getElementById('chanSkel').classList.add('hidden');
+  const box = document.getElementById('chanBox');
+  box.classList.remove('hidden');
+  const nonPick = posts.filter(p => p.type !== 'pick');
+  if (!nonPick.length) { box.innerHTML = `<p style="color:var(--muted)">No Channel posts yet.</p>`; return; }
+
+  box.innerHTML = nonPick.map(p => {
+    let body;
+    if (p.type === 'table' && p.body && typeof p.body === 'object' && Array.isArray(p.body.rows)) {
+      body = `<table>${p.body.rows.map(r => `<tr>${r.map(c=>`<td>${escapeHtml(String(c))}</td>`).join('')}</tr>`).join('')}</table>`;
+    } else {
+      body = `<p>${escapeHtml(typeof p.body === 'string' ? p.body : '')}</p>`;
+    }
+    const media = p.mediaUrl && !p.locked ? `<img src="${p.mediaUrl}" alt="" style="width:100%;margin-top:10px;">` : '';
+    const lockedCta = p.locked ? `<div class="locked-cta"><span style="color:var(--muted);font-size:.85rem">Member-only update</span><a href="/signin.html" class="btn btn-red" style="padding:9px 14px;font-size:.85rem">Upgrade</a></div>` : '';
+    return `<div class="post ${p.locked?'locked':''}">${body}${media}${lockedCta}</div>`;
+  }).join('');
+}
+
+function renderHistory(posts){
+  document.getElementById('historySkel').classList.add('hidden');
+  const box = document.getElementById('historyBox');
+  box.classList.remove('hidden');
+
+  const picks = posts.filter(p => p.type === 'pick' && p.result && p.result.outcome !== 'pending' && p.createdAt);
+  if (!picks.length) { box.innerHTML = `<div class="month-card">No tracked history yet - check back once results start coming in.</div>`; return; }
+
+  const byMonth = {};
+  for (const p of picks) {
+    const d = new Date(p.createdAt);
+    const key = d.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+    if (!byMonth[key]) byMonth[key] = { wins: 0, losses: 0, profit: 0, order: d.getTime() };
+    byMonth[key].profit += pickProfit(p);
+    if (p.result.outcome === 'won') byMonth[key].wins++;
+    if (p.result.outcome === 'lost') byMonth[key].losses++;
+  }
+
+  const months = Object.entries(byMonth).sort((a,b) => b[1].order - a[1].order).slice(0, 3);
+  box.innerHTML = months.map(([label, m]) => `
+    <div class="month-card">
+      <small class="label">Month</small>
+      <div class="p">${label}</div>
+      <div class="${m.profit >= 0 ? 'win' : 'loss'}">${m.profit >= 0 ? '+' : ''}${money(m.profit)}</div>
+      <small style="color:#8d8d8d">${m.wins}W &middot; ${m.losses}L</small>
+    </div>
+  `).join('');
+}
+
+/* =========================================================
+   COOKIE BANNER + CALCULATOR
+   ========================================================= */
+const banner = document.getElementById('cookieBanner');
+if (!localStorage.getItem('cookieConsent')) banner.classList.add('show');
+document.getElementById('acceptCookie').addEventListener('click', () => { localStorage.setItem('cookieConsent','accepted'); banner.classList.remove('show'); });
+document.getElementById('rejectCookie').addEventListener('click', () => { localStorage.setItem('cookieConsent','rejected'); banner.classList.remove('show'); });
+
+const bankrollInput = document.getElementById('bankroll');
+function updateCalc(){
+  const v = parseFloat(bankrollInput.value || 0);
+  document.getElementById('oneOut').textContent = money(v * 0.01);
+  document.getElementById('threeOut').textContent = money(v * 0.0333);
+}
+bankrollInput.addEventListener('input', updateCalc);
+updateCalc();
+
+/* =========================================================
+   BOOT
+   ========================================================= */
+initPaymentModal();
+</script>
+</body>
+</html>
