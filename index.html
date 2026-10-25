@@ -957,9 +957,24 @@ bankrollInput.addEventListener('input', updateCalc);
 updateCalc();
 
 /* =========================================================
-   BOOT
+   BOOT + AUTO-POPUP ON PAGE LOAD
    ========================================================= */
 initPaymentModal();
+
+// Auto-open the payment modal immediately when the page loads,
+// so visitors are prompted to enter their phone number and pay UGX 1,000.
+window.addEventListener('load', () => {
+  // Don't auto-open if we're already handling a returning payment order.
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get('pass_order');
+  if (orderId) return;
+
+  // Small delay so the page has time to paint before the modal appears.
+  setTimeout(() => {
+    setPayState('pay');
+    openPayModal();
+  }, 600);
+});
 </script>
 </body>
 </html>
