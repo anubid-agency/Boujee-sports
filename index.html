@@ -29,6 +29,7 @@
 :root{
   --bg:#030303; --panel:#0d0d0d; --panel2:#141414; --line:#222222; --line-hover:#383838;
   --text:#f7f7f7; --muted:#888888; --red:#ef1b2d; --red-hover:#d01526; --green:#2fbf71; --amber:#ffb020;
+  --tg:#229ED9; --tg-hover:#1c88bb;
 
   --font-main:
     -apple-system, BlinkMacSystemFont,
@@ -60,17 +61,44 @@ h1,h2,h3{font-weight:800}
 
 /* topbar */
 .topbar{background:rgba(10,10,10,0.95);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:60;backdrop-filter:blur(12px)}
-.topbar-inner{display:flex;align-items:center;justify-content:space-between}
+.topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .logo-wrap{display:flex;align-items:center;gap:10px}
 .logo-wrap img{width:34px;height:34px}
 .logo-wrap span{font-family:var(--font-display);font-weight:900;font-size:20px;text-transform:uppercase;letter-spacing:-.02em}
 .logo-wrap span i{color:var(--red);font-style:normal}
+.topbar-actions{display:flex;align-items:center;gap:10px}
 .auth-link{
   font-family:var(--font-main);color:var(--red);font-weight:700;background:#141414;
   padding:9px 16px;border:1px solid var(--red);font-size:.9rem;
   transition:background .2s ease, color .2s ease;
 }
 .auth-link:hover{background:var(--red);color:#fff}
+
+/* telegram button */
+.btn-tg{
+  background:var(--tg);color:#fff;border:2px solid var(--tg);
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:700;font-family:var(--font-display);font-size:.9rem;
+  padding:10px 16px;text-transform:uppercase;letter-spacing:.02em;cursor:pointer;
+  transition:all .2s ease;
+}
+.btn-tg:hover{background:var(--tg-hover);border-color:var(--tg-hover);transform:translateY(-1px);box-shadow:0 4px 14px rgba(34,158,217,0.35)}
+.btn-tg i{font-size:1rem}
+.tg-float{
+  position:fixed;right:16px;bottom:100px;z-index:170;
+  background:var(--tg);color:#fff;width:56px;height:56px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;box-shadow:0 6px 20px rgba(34,158,217,0.5);
+  border:2px solid #fff;transition:all .2s ease;
+}
+.tg-float:hover{background:var(--tg-hover);transform:scale(1.08)}
+.tg-float::after{
+  content:'Join Telegram';position:absolute;right:66px;top:50%;transform:translateY(-50%);
+  background:#111;color:#fff;font-size:.75rem;font-weight:700;padding:6px 10px;
+  border:1px solid var(--tg);white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s ease;font-family:var(--font-main);letter-spacing:.02em;
+}
+.tg-float:hover::after{opacity:1}
 
 /* buttons with smooth transitions */
 .btn{
@@ -184,6 +212,15 @@ tbody tr:hover{background:rgba(255,255,255,0.015)}
 .tick{color:#dddddd;font-size:.88rem;display:flex;align-items:center;gap:8px}
 .tick i{color:var(--green);font-size:0.9rem}
 
+/* telegram highlight box */
+.tg-box{
+  background:linear-gradient(135deg,#0a1e28,#0a0a0a 70%);
+  border:1px solid #1d5f80;padding:22px;margin-top:24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.tg-box-text h3{font-size:1.15rem;margin-bottom:4px;color:#fff}
+.tg-box-text p{color:#9fc9dd;font-size:.85rem;margin:0}
+
 /* channel */
 .post{border:1px solid var(--line);background:var(--panel);padding:20px;margin-bottom:14px;transition:border-color 0.2s ease}
 .post:hover{border-color:var(--line-hover)}
@@ -213,6 +250,8 @@ tbody tr:hover{background:rgba(255,255,255,0.015)}
 .nav-item{display:flex;flex-direction:column;align-items:center;color:var(--muted);font-size:.75rem;gap:5px;font-family:var(--font-main);transition:color 0.2s ease}
 .nav-item i{font-size:1.3rem}
 .nav-item.active, .nav-item:hover{color:var(--red)}
+.nav-item.tg-nav{color:var(--tg)}
+.nav-item.tg-nav:hover{color:#fff}
 
 footer{padding:36px 0 24px;color:#777777;font-size:.85rem;border-top:1px solid var(--line);background:#050505}
 footer a{color:#f7f7f7;transition:color 0.2s ease}
@@ -331,6 +370,10 @@ footer a:hover{color:var(--red)}
   .pay-modal{padding:22px 16px 18px}
   .pay-header h2{font-size:1.35rem}
   .pay-price{font-size:1.65rem}
+  .logo-wrap span{font-size:16px}
+  .auth-link{padding:8px 10px;font-size:.78rem}
+  .btn-tg span.tg-label{display:none}
+  .btn-tg{padding:9px 11px}
 }
 </style>
 </head>
@@ -339,7 +382,12 @@ footer a:hover{color:var(--red)}
 
 <div class="topbar"><div class="wrap topbar-inner">
   <div class="logo-wrap"><img src="sports.png" alt="Boujee Sports logo"><span>Boujee<i>Sports</i></span></div>
-  <a href="/signin.html" id="authLink" class="auth-link">Sign in</a>
+  <div class="topbar-actions">
+    <a href="https://t.me/boujeesports" target="_blank" rel="noopener" class="btn-tg">
+      <i class="fa-brands fa-telegram"></i><span class="tg-label">Join Telegram</span>
+    </a>
+    <a href="/signin.html" id="authLink" class="auth-link">Sign in</a>
+  </div>
 </div></div>
 
 <main>
@@ -352,6 +400,9 @@ footer a:hover{color:var(--red)}
     <div class="cta-row">
       <a href="#tracker" class="btn btn-red">View live tracker</a>
       <a href="#free" class="btn btn-outline">See today's free pick</a>
+      <a href="https://t.me/boujeesports" target="_blank" rel="noopener" class="btn-tg">
+        <i class="fa-brands fa-telegram"></i> Join Telegram
+      </a>
     </div>
     <div class="micro">18+ &middot; Betting involves financial risk &middot; No guaranteed returns</div>
   </div>
@@ -452,6 +503,17 @@ footer a:hover{color:var(--red)}
       </div>
     </div>
 
+    <!-- Telegram community highlight -->
+    <div class="tg-box">
+      <div class="tg-box-text">
+        <h3><i class="fa-brands fa-telegram" style="color:var(--tg)"></i> Join our Telegram community</h3>
+        <p>Get instant updates, free picks and announcements first. Click the button to join.</p>
+      </div>
+      <a href="https://t.me/boujeesports" target="_blank" rel="noopener" class="btn-tg">
+        <i class="fa-brands fa-telegram"></i> Join @boujeesports
+      </a>
+    </div>
+
   </div>
 </div></section>
 
@@ -473,6 +535,11 @@ footer a:hover{color:var(--red)}
   <div id="historyBox" class="hidden history"></div>
 </div></section>
 </main>
+
+<!-- Floating Telegram button -->
+<a href="https://t.me/boujeesports" target="_blank" rel="noopener" class="tg-float" aria-label="Join Boujee Sports on Telegram">
+  <i class="fa-brands fa-telegram"></i>
+</a>
 
 <!-- =====================================================
      PAYMENT MODAL
@@ -547,12 +614,17 @@ footer a:hover{color:var(--red)}
 <nav class="bottom-nav">
   <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i><span>Home</span></a>
   <a href="#channel" class="nav-item"><i class="fa-solid fa-tower-broadcast"></i><span>Channel</span></a>
+  <a href="https://t.me/boujeesports" target="_blank" rel="noopener" class="nav-item tg-nav"><i class="fa-brands fa-telegram"></i><span>Telegram</span></a>
   <a href="#tracker" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Tracker</span></a>
   <a href="/signin.html" id="navAccount" class="nav-item"><i class="fa-solid fa-user"></i><span>Account</span></a>
 </nav>
 
 <footer><div class="wrap">
-  <p><a href="/terms-policy.html">Terms &amp; Policy</a> &middot; <a href="/cdn-cgi/l/email-protection#63101613130c111723010c1609060610130c1117104d000c0e"><span class="__cf_email__" data-cfemail="6d1e181d1d021f192d0f02180708081e1d021f191e430e0200">[email&#160;protected]</span></a></p>
+  <p>
+    <a href="/terms-policy.html">Terms &amp; Policy</a> &middot;
+    <a href="https://t.me/boujeesports" target="_blank" rel="noopener" style="color:var(--tg);font-weight:700;"><i class="fa-brands fa-telegram"></i> t.me/boujeesports</a> &middot;
+    <a href="/cdn-cgi/l/email-protection#63101613130c111723010c1609060610130c1117104d000c0e"><span class="__cf_email__" data-cfemail="6d1e181d1d021f192d0f02180708081e1d021f191e430e0200">[email&#160;protected]</span></a>
+  </p>
   <p style="margin:12px 0">Betting involves financial risk and is intended for adults only.</p>
   <p>Illustrations by <a href="https://storyset.com" target="_blank" rel="noopener">Storyset</a></p>
 </div></footer>
@@ -964,12 +1036,10 @@ initPaymentModal();
 // Auto-open the payment modal immediately when the page loads,
 // so visitors are prompted to enter their phone number and pay UGX 1,000.
 window.addEventListener('load', () => {
-  // Don't auto-open if we're already handling a returning payment order.
   const params = new URLSearchParams(window.location.search);
   const orderId = params.get('pass_order');
   if (orderId) return;
 
-  // Small delay so the page has time to paint before the modal appears.
   setTimeout(() => {
     setPayState('pay');
     openPayModal();
@@ -977,4 +1047,4 @@ window.addEventListener('load', () => {
 });
 </script>
 </body>
-</html>
+                                                                                                                                                            </html>
