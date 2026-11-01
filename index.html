@@ -505,14 +505,20 @@ footer a:hover{color:var(--red)}
 
 <!-- PREDICTIONS AND ODDS -->
 <section class="sec" id="predictions"><div class="wrap">
-  <div class="pred-head">
+ 
+ 
+ <div class="pred-head">
     <h2 id="pred-heading">Predictions and odds - Today</h2>
     <div class="pred-tabs">
       <button class="btn btn-outline active" id="tab-today">Today</button>
       <button class="btn btn-outline" id="tab-tomorrow">Tomorrow</button>
+      <button class="btn btn-outline" id="tab-week">This week</button>
       <button class="btn btn-outline" id="tab-all">All</button>
+      <button class="btn btn-outline active" id="top-toggle">Top leagues</button>
       <input type="text" id="fx-q" placeholder="Search team or league..." class="fx-search">
     </div>
+    <p class="micro" style="margin-top:0">Predictions may change before kickoff. 18+ only. Betting involves risk.</p>
+  </div>
   </div>
   <div class="table-wrap">
     <table class="pred-table">
@@ -1151,76 +1157,100 @@ updateCalc();
 /* =========================================================
    PREDICTIONS AND ODDS MODULE (FIXED)
    ========================================================= */
+
+/* =========================================================
+   PREDICTIONS AND ODDS MODULE
+   ========================================================= */
 const fxBody = document.getElementById('fx-body');
 const fxQ = document.getElementById('fx-q');
 const predHeading = document.getElementById('pred-heading');
+const topToggle = document.getElementById('top-toggle');
+const tabBtns = document.querySelectorAll('#predictions [id^="tab-"]');
 let allMatches = [];
 let currentTab = 'today';
+let topOnly = true;
+let loadId = 0;
 
-async function fetchPredData(tab) {
-  currentTab = tab;
-  try {
-    const url = `/api/feed/matches?day=${tab}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('API feed error');
-    const data = await res.json();
-    allMatches = data.matches || data || [];
-  } catch (err) {
-    console.error('Feed error:', err);
-    allMatches = [];
-  }
-  renderPredictions();
+function fxEsc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
-
-function getTeamLogo(url, name) {
-  const short = name ? name.substring(0, 2).toUpperCase() : '??';
-  const safeName = escapeHtml(name || '').replace(/'/g, "&#39;");
-  if (url) return `<img src="${escapeHtml(url)}" alt="" class="team-logo" onerror="this.outerHTML='<div class=\\'team-no-logo\\'>${safeName.substring(0,2)}</div>'">`;
-  return `<div class="team-no-logo">${escapeHtml(short)}</div>`;
+function fxInitials(name) {
+  const t = String(name || '').replace(/\sW$/, '').trim();
+  return (t.slice(0, 2) || '??').toUpperCase();
 }
-
-function getOddsArr(dir) {
+function fxLogo(url, name) {
+  const ini = fxEsc(fxInitials(name));
+  if (url) return `<img src="${fxEsc(url)}" alt="" class="team-logo" loading="lazy" data-ini="${ini}">`;
+  return `<div class="team-no-logo">${ini}</div>`;
+}
+function fxArrow(dir) {
   if (dir === 'up') return '<span class="tri-up"></span>';
   if (dir === 'down') return '<span class="tri-down"></span>';
   return '';
 }
-
-function formatOdds(val) {
+function fxOdd(val, dir) {
   const n = parseFloat(val);
-  return isNaN(n) ? (val || '-') : n.toFixed(2);
+  if (isNaN(n)) return '-';
+  return n.toFixed(2) + fxArrow(dir);
+}
+
+async function fetchPredData(tab) {
+  const myId = ++loadId;
+  if (fxBody) fxBody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--muted)">Loading...</td></tr>';
+  let list = [];
+  try {
+    const res = await fetch('/api/feed/matches?day=' + encodeURIComponent(tab));
+    if (!res.ok) throw new Error('feed ' + res.status);
+    const data = await res.json();
+    list = data.matches || [];
+  } catch (err) {
+    console.error('Failed to load feed:', err);
+    if (myId === loadId && fxBody) {
+      fxBody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--muted)">Could not load predictions. Please try again.</td></tr>';
+    }
+    return;
+  }
+  if (myId !== loadId) return;
+  allMatches = list;
+  renderPredictions();
 }
 
 function renderPredictions() {
   if (!fxBody) return;
   const q = (fxQ.value || '').toLowerCase();
-  const filtered = allMatches.filter(m => 
-    (m.home && m.home.toLowerCase().includes(q)) ||
-    (m.away && m.away.toLowerCase().includes(q)) ||
-    (m.league_name && m.league_name.toLowerCase().includes(q)) ||
-    (m.league_tag && m.league_tag.toLowerCase().includes(q))
-  );
+  const filtered = allMatches.filter((m) => {
+    if (topOnly && !m.top) return false;
+    if (!q) return true;
+    return (
+      String(m.home || '').toLowerCase().includes(q) ||
+      String(m.away || '').toLowerCase().includes(q) ||
+      String(m.league_name || '').toLowerCase().includes(q) ||
+      String(m.league_tag || '').toLowerCase().includes(q)
+    );
+  });
+
+  if (!filtered.length) {
+    const hint = topOnly && allMatches.length
+      ? 'No top-league matches in this period. Tap "Top leagues" to show every league.'
+      : 'No predictions found.';
+    fxBody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--muted)">${fxEsc(hint)}</td></tr>`;
+    return;
+  }
 
   let html = '';
   let currentLeague = '';
-
-  filtered.forEach(m => {
-    const leagueTitle = m.league_name || m.league_tag || 'FOOTBALL LEAGUE';
-    
-    if (leagueTitle !== currentLeague) {
-      currentLeague = leagueTitle;
-      const flagImg = m.flag_url ? `<img src="${escapeHtml(m.flag_url)}" class="league-flag" onerror="this.style.display='none'">` : '';
-      html += `<tr class="league-row">
-        <td colspan="10">
-          ${flagImg}
-          <span class="league-name">${escapeHtml(leagueTitle)}</span>
-        </td>
-      </tr>`;
+  filtered.forEach((m) => {
+    const title = m.league_name || m.league_tag || 'FOOTBALL';
+    if (title !== currentLeague) {
+      currentLeague = title;
+      const flag = m.flag_url ? `<img src="${fxEsc(m.flag_url)}" class="league-flag" alt="">` : '';
+      html += `<tr class="league-row"><td colspan="10">${flag}<span class="league-name">${fxEsc(title)}</span></td></tr>`;
     }
 
     let timeStr = '', dateStr = '';
     if (m.kickoff_utc) {
       const d = new Date(m.kickoff_utc);
-      timeStr = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Africa/Kampala' });
+      timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Africa/Kampala' });
       dateStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'Africa/Kampala' });
     }
 
@@ -1230,92 +1260,95 @@ function renderPredictions() {
     const pMax = Math.max(p1, pX, p2);
 
     let pickCls = 'pick-val';
-    if (m.status === 'FT') {
-      const sc = (m.live_score || '').split('-');
+    if (m.status === 'FT' || m.status === 'Pen. FT') {
+      const sc = String(m.live_score || '').split('-');
       if (sc.length === 2) {
         const sh = Number(sc[0]), sa = Number(sc[1]);
-        let actual = 'X'; if (sh > sa) actual = '1'; if (sa > sh) actual = '2';
-        if (m.pick == actual) pickCls += ' pick-correct';
-        else pickCls += ' pick-wrong';
+        const actual = sh > sa ? '1' : sa > sh ? '2' : 'X';
+        pickCls += String(m.pick) === actual ? ' pick-correct' : ' pick-wrong';
       }
     }
 
-    const oH = formatOdds(m.odds_home) + getOddsArr(m.odds_movement?.[0]);
-    const oD = formatOdds(m.odds_draw) + getOddsArr(m.odds_movement?.[1]);
-    const oA = formatOdds(m.odds_away) + getOddsArr(m.odds_movement?.[2]);
+    const mv = m.odds_movement || [];
+    const hasOdds = m.odds_home != null || m.odds_draw != null || m.odds_away != null;
+    const oddsCell = hasOdds
+      ? `${fxOdd(m.odds_home, mv[0])} / ${fxOdd(m.odds_draw, mv[1])} / ${fxOdd(m.odds_away, mv[2])}`
+      : '<span style="color:var(--muted)">-</span>';
+    const cs = m.predicted_score ? fxEsc(m.predicted_score) : '-';
+    const goals = m.avg_goals != null ? fxEsc(m.avg_goals) : '-';
 
     html += `<tr>
-      <td class="col-time">
-        <div class="time-box">
-          <span class="time-val">${escapeHtml(timeStr)}</span>
-          <span class="time-date">${escapeHtml(dateStr)}</span>
-        </div>
-      </td>
-      <td class="col-match">
-        <div class="match-box">
-          <div class="match-team match-home"><span>${escapeHtml(m.home)}</span>${getTeamLogo(m.home_logo, m.home)}</div>
-          <div class="match-vs">vs</div>
-          <div class="match-team match-away">${getTeamLogo(m.away_logo, m.away)}<span>${escapeHtml(m.away)}</span></div>
-        </div>
-      </td>
+      <td class="col-time"><div class="time-box"><span class="time-val">${fxEsc(timeStr)}</span><span class="time-date">${fxEsc(dateStr)}</span></div></td>
+      <td class="col-match"><div class="match-box">
+        <div class="match-team match-home"><span>${fxEsc(m.home)}</span>${fxLogo(m.home_logo, m.home)}</div>
+        <div class="match-vs">vs</div>
+        <div class="match-team match-away">${fxLogo(m.away_logo, m.away)}<span>${fxEsc(m.away)}</span></div>
+      </div></td>
       <td class="prob-val ${p1 === pMax && pMax > 0 ? 'prob-high' : ''}">${p1}%</td>
       <td class="prob-val ${pX === pMax && pMax > 0 ? 'prob-high' : ''}">${pX}%</td>
       <td class="prob-val ${p2 === pMax && pMax > 0 ? 'prob-high' : ''}">${p2}%</td>
-      <td class="${pickCls}">${escapeHtml(m.pick || '-')}</td>
-      <td style="font-weight:700">${escapeHtml(String(m.avg_goals || '-'))}</td>
-      <td class="cs-val">${escapeHtml(m.predicted_score || '-')}</td>
-      <td>
-        <div class="res-score">${escapeHtml(m.live_score || '-')}</div>
-        <div class="res-stat">${escapeHtml(m.status || '')}</div>
-      </td>
-      <td class="odds-val">${oH} / ${oD} / ${oA}</td>
+      <td class="${pickCls}">${fxEsc(m.pick || '-')}</td>
+      <td style="font-weight:700">${goals}</td>
+      <td class="cs-val">${cs}</td>
+      <td><div class="res-score">${fxEsc(m.live_score || '-')}</div><div class="res-stat">${fxEsc(m.status || '')}</div></td>
+      <td class="odds-val">${oddsCell}</td>
     </tr>`;
   });
-
-  if (filtered.length === 0) {
-    html = `<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--muted)">No predictions found.</td></tr>`;
-  }
   fxBody.innerHTML = html;
 }
 
 function updatePredHeading(tab) {
   if (!predHeading) return;
-  if (tab === 'all') {
-    predHeading.textContent = `Predictions and odds - All Matches`;
-    return;
-  }
-  
-  const now = new Date();
-  if (tab === 'tomorrow') now.setDate(now.getDate() + 1);
-
-  const dayNum = parseInt(now.toLocaleDateString('en-US', { day: 'numeric', timeZone: 'Africa/Kampala' }));
-  const monthName = now.toLocaleDateString('en-US', { month: 'long', timeZone: 'Africa/Kampala' });
-  const yearNum = now.toLocaleDateString('en-US', { year: 'numeric', timeZone: 'Africa/Kampala' });
-  const weekdayName = now.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'Africa/Kampala' });
-
+  if (tab === 'all') { predHeading.textContent = 'Predictions and odds - All matches'; return; }
+  if (tab === 'week') { predHeading.textContent = 'Predictions and odds - This week'; return; }
+  const d = new Date(Date.now() + (tab === 'tomorrow' ? 86400000 : 0));
+  const tz = { timeZone: 'Africa/Kampala' };
+  const dayNum = Number(d.toLocaleDateString('en-US', { ...tz, day: 'numeric' }));
+  const month = d.toLocaleDateString('en-US', { ...tz, month: 'long' });
+  const year = d.toLocaleDateString('en-US', { ...tz, year: 'numeric' });
+  const weekday = d.toLocaleDateString('en-US', { ...tz, weekday: 'long' });
   const suffix = ['th', 'st', 'nd', 'rd'][(dayNum % 10 > 3 || Math.floor(dayNum % 100 / 10) === 1) ? 0 : dayNum % 10];
-  const formattedDate = `${weekdayName}, ${monthName} ${dayNum}${suffix}, ${yearNum}`;
-
   const capTab = tab.charAt(0).toUpperCase() + tab.slice(1);
-  predHeading.textContent = `Predictions and odds - ${capTab} (${formattedDate})`;
+  predHeading.textContent = `Predictions and odds - ${capTab} (${weekday}, ${month} ${dayNum}${suffix}, ${year})`;
 }
 
-document.querySelectorAll('#predictions .btn-outline').forEach(b => {
-  if (b.id.startsWith('tab-')) {
-    b.addEventListener('click', (e) => {
-      document.querySelectorAll('#predictions .btn-outline').forEach(x => x.classList.remove('active'));
-      e.target.classList.add('active');
-      const tab = e.target.id.replace('tab-', '');
-      updatePredHeading(tab);
-      fetchPredData(tab);
-    });
-  }
+tabBtns.forEach((b) => {
+  b.addEventListener('click', () => {
+    tabBtns.forEach((x) => x.classList.remove('active'));
+    b.classList.add('active');
+    currentTab = b.id.replace('tab-', '');
+    updatePredHeading(currentTab);
+    fetchPredData(currentTab);
+  });
 });
+
+if (topToggle) {
+  topToggle.addEventListener('click', () => {
+    topOnly = !topOnly;
+    topToggle.classList.toggle('active', topOnly);
+    topToggle.textContent = topOnly ? 'Top leagues' : 'All leagues';
+    renderPredictions();
+  });
+}
 if (fxQ) fxQ.addEventListener('input', renderPredictions);
+
+if (fxBody) {
+  fxBody.addEventListener('error', (e) => {
+    const el = e.target;
+    if (!el || el.tagName !== 'IMG') return;
+    if (el.classList.contains('team-logo')) {
+      const d = document.createElement('div');
+      d.className = 'team-no-logo';
+      d.textContent = el.getAttribute('data-ini') || '?';
+      el.replaceWith(d);
+    } else {
+      el.remove();
+    }
+  }, true);
+}
 
 updatePredHeading('today');
 fetchPredData('today');
-
 /* =========================================================
    BOOT + AUTO-POPUP ON PAGE LOAD
    ========================================================= */
