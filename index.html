@@ -74,16 +74,15 @@ h1,h2,h3{font-weight:800}
 }
 .auth-link:hover{background:var(--red);color:#fff}
 
-/* telegram button */
+/* telegram button - icon only */
 .btn-tg{
   background:var(--tg);color:#fff;border:2px solid var(--tg);
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  font-weight:700;font-family:var(--font-display);font-size:.9rem;
-  padding:10px 16px;text-transform:uppercase;letter-spacing:.02em;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:42px;height:42px;cursor:pointer;
   transition:all .2s ease;
 }
 .btn-tg:hover{background:var(--tg-hover);border-color:var(--tg-hover);transform:translateY(-1px);box-shadow:0 4px 14px rgba(34,158,217,0.35)}
-.btn-tg i{font-size:1rem}
+.btn-tg i{font-size:1.2rem}
 
 /* buttons with smooth transitions */
 .btn{
@@ -98,12 +97,12 @@ h1,h2,h3{font-weight:800}
 .btn-outline{background:transparent;border-color:#3a3a3a;color:#fff}
 .btn-outline:hover{border-color:var(--red);background:rgba(239,27,45,0.05);transform:translateY(-1px)}
 
-/* compact hero (~220px max height feel on mobile) */
-.hero{padding:32px 0 28px;border-bottom:1px solid var(--line);background:var(--bg)}
+/* hero with hero.jpg background */
+.hero{padding:60px 0 50px;border-bottom:1px solid var(--line);background:linear-gradient(rgba(3,3,3,0.85), rgba(3,3,3,0.92)), url('hero.jpg') center/cover no-repeat}
 .hero-content{max-width:640px}
 .eyebrow{font-family:var(--font-main);color:var(--red);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-.hero h1{font-size:clamp(26px,3.8vw,40px);line-height:1.12;margin:8px 0 10px;letter-spacing:-.03em}
-.hero p{color:#cccccc;font-size:.95rem;line-height:1.5;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4vw,44px);line-height:1.12;margin:8px 0 10px;letter-spacing:-.03em}
+.hero p{color:#cccccc;font-size:1rem;line-height:1.5;margin-bottom:20px}
 .cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
 /* sections */
@@ -117,8 +116,6 @@ section.sec{padding:36px 0;border-bottom:1px solid var(--line)}
 table{width:100%;border-collapse:collapse;min-width:640px;font-family:var(--font-main)}
 th,td{padding:12px 14px;border-bottom:1px solid #1a1a1a;text-align:left;font-size:13px}
 th{color:#8f8f8f;font-size:11px;text-transform:uppercase;letter-spacing:.08em;background:#111111;font-family:var(--font-main)}
-tbody tr{transition:background 0.15s ease}
-tbody tr:hover{background:rgba(255,255,255,0.015)}
 .win{color:var(--green);font-weight:700}
 .loss{color:#ff6767;font-weight:700}
 .pending{color:var(--amber);font-weight:700}
@@ -142,22 +139,24 @@ tbody tr:hover{background:rgba(255,255,255,0.015)}
 .th-main th { background: #111; color: #fff; font-weight: 800; font-family: var(--font-display); text-transform: uppercase; font-size: 11px; border-bottom: 2px solid var(--red); border-top: 1px solid #222; border-left: 1px solid #222; border-right: 1px solid #222; }
 .th-sub th { background: #141414; color: #888; font-weight: 700; font-size: 10px; border: 1px solid #222; text-transform: uppercase; }
 
-.pred-table tbody tr:nth-child(odd) { background: #0a0a0a; }
-.pred-table tbody tr:nth-child(even) { background: #0d0d0d; }
-.pred-table tbody tr { border-bottom: 1px solid #222; }
+/* Alternating row colors for predictions table */
+.pred-table tbody tr:nth-child(odd) { background: #080808; }
+.pred-table tbody tr:nth-child(even) { background: #121212; }
+.pred-table tbody tr { border-bottom: 1px solid #222; transition: background 0.15s ease; }
+.pred-table tbody tr:hover { background: rgba(255,255,255,0.03); }
 
 /* Sticky columns */
-.pred-table .col-time { position: sticky; left: 0; width: 60px; min-width: 60px; max-width: 60px; z-index: 10; border-right: 1px solid #141414; background: #0d0d0d; }
-.pred-table .col-match { position: sticky; left: 60px; width: 250px; min-width: 250px; max-width: 250px; z-index: 10; border-right: 1px solid #222; background: #0d0d0d; }
+.pred-table .col-time { position: sticky; left: 0; width: 60px; min-width: 60px; max-width: 60px; z-index: 10; border-right: 1px solid #141414; }
+.pred-table .col-match { position: sticky; left: 60px; width: 250px; min-width: 250px; max-width: 250px; z-index: 10; border-right: 1px solid #222; }
 .pred-table thead .col-time, .pred-table thead .col-match { z-index: 12; background: #111; border-bottom: 2px solid var(--red); }
 .pred-table thead .th-sub .col-match { background: #141414; }
 
 .pred-table tbody tr:nth-child(odd) .col-time, 
-.pred-table tbody tr:nth-child(odd) .col-match { background: #0a0a0a; }
+.pred-table tbody tr:nth-child(odd) .col-match { background: #080808; }
 .pred-table tbody tr:nth-child(even) .col-time, 
-.pred-table tbody tr:nth-child(even) .col-match { background: #0d0d0d; }
+.pred-table tbody tr:nth-child(even) .col-match { background: #121212; }
 
-.league-row td { background: #141414 !important; border-bottom: 2px solid var(--red); padding: 7px 10px; text-align: left; position: sticky; left: 0; z-index: 9; }
+.league-row td { background: #161616 !important; border-bottom: 2px solid var(--red); padding: 7px 10px; text-align: left; position: sticky; left: 0; z-index: 9; }
 .league-flag { width: 16px; height: 11px; object-fit: cover; margin-right: 8px; vertical-align: middle; }
 .league-name { color: var(--red); font-weight: 800; font-size: 11px; text-transform: uppercase; vertical-align: middle; }
 
@@ -229,19 +228,14 @@ tbody tr:hover{background:rgba(255,255,255,0.015)}
 .skeleton{background:linear-gradient(90deg,var(--panel) 25%,var(--panel2) 37%,var(--panel) 63%);background-size:400% 100%;animation:sk 1.4s ease infinite}
 @keyframes sk{0%{background-position:100% 50%}100%{background-position:0 50%}}
 
-/* cookie + nav + footer */
-.cookie-banner{position:fixed;bottom:85px;left:16px;right:16px;background:#111111;border:1px solid var(--red);padding:16px;z-index:220;max-width:560px;margin:0 auto;display:none}
+/* cookie + footer */
+.cookie-banner{position:fixed;bottom:20px;left:16px;right:16px;background:#111111;border:1px solid var(--red);padding:16px;z-index:220;max-width:560px;margin:0 auto;display:none}
 .cookie-banner.show{display:block}
 .cookie-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .cookie-header img{width:28px;height:28px;background:#fff;padding:3px}
 .cookie-header h3{font-size:1.1rem;color:var(--red)}
 .cookie-text{color:#cccccc;font-size:.82rem;margin-bottom:12px;line-height:1.4}
 .cookie-actions{display:flex;gap:8px;flex-wrap:wrap}
-
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0d0d0d;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 8px;z-index:150}
-.nav-item{display:flex;flex-direction:column;align-items:center;color:var(--muted);font-size:.72rem;gap:4px;font-family:var(--font-main);transition:color 0.2s ease}
-.nav-item i{font-size:1.2rem}
-.nav-item.active, .nav-item:hover{color:var(--red)}
 
 footer{padding:28px 0 20px;color:#777777;font-size:.82rem;border-top:1px solid var(--line);background:#050505}
 footer a{color:#f7f7f7;transition:color 0.2s ease}
@@ -301,6 +295,17 @@ footer a:hover{color:var(--red)}
   text-transform:uppercase;letter-spacing:.08em;margin-top:3px;
 }
 
+/* Region toggle inside payment modal */
+.pay-region-group{margin-bottom:14px}
+.pay-region-label{display:block;color:#999;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.pay-region-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pay-region-tab{
+  background:#181818;border:1px solid #282828;color:#bbb;padding:10px;
+  font-weight:700;font-size:.85rem;text-transform:uppercase;cursor:pointer;
+  text-align:center;transition:all .2s ease;font-family:var(--font-display);
+}
+.pay-region-tab.active{background:var(--red);border-color:var(--red);color:#fff}
+
 .pay-input-group{margin-bottom:12px}
 .pay-input-group label{
   display:block;color:#999999;font-size:.75rem;
@@ -358,7 +363,7 @@ footer a:hover{color:var(--red)}
   .pay-price{font-size:1.5rem}
   .logo-wrap span{font-size:16px}
   .auth-link{padding:8px 10px;font-size:.78rem}
-  .btn-tg{padding:8px 12px;font-size:.82rem}
+  .btn-tg{width:38px;height:38px}
 }
 </style>
 </head>
@@ -368,8 +373,8 @@ footer a:hover{color:var(--red)}
 <div class="topbar"><div class="wrap topbar-inner">
   <div class="logo-wrap"><img src="/sports.png" alt="Boujee Sports logo"><span>Boujee<i>Sports</i></span></div>
   <div class="topbar-actions">
-    <a href="https://t.me/boujeesports" target="_blank" rel="noopener" class="btn-tg">
-      <i class="fa-brands fa-telegram"></i><span>Join Telegram</span>
+    <a href="https://t.me/boujeesports" target="_blank" rel="noopener" class="btn-tg" aria-label="Join Telegram">
+      <i class="fa-brands fa-telegram"></i>
     </a>
     <a href="/signin.html" id="authLink" class="auth-link">Sign in</a>
   </div>
@@ -445,7 +450,8 @@ footer a:hover{color:var(--red)}
           <div style="display:flex;align-items:center;gap:8px;color:var(--red);font-weight:800;font-size:.95rem;margin-bottom:4px;">
             <i class="fa-solid fa-calendar-day"></i> DAILY ACCESS
           </div>
-          <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:900;margin-bottom:6px;">UGX 1,000</div>
+          <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:900;margin-bottom:2px;" id="dailyPriceDisplay">UGX 2,000</div>
+          <div style="color:#888;font-size:.72rem;text-transform:uppercase;margin-bottom:6px;">or USD 1.00 international</div>
           <p style="color:#aaaaaa;font-size:.82rem;line-height:1.4;margin-bottom:12px;">Access today's available VIP selections for 24 hours.</p>
           <div class="ticks-grid">
             <div class="tick"><i class="fa-solid fa-check"></i>Today's researched selections</div>
@@ -495,24 +501,32 @@ footer a:hover{color:var(--red)}
     <div class="pay-header">
       <img src="/sports.png" alt="Boujee Sports">
       <h2 id="payModalTitle">Unlock today's tickets</h2>
-      <p>Pay once to access today's selections for <strong><span id="payHours">24</span> hours</strong>. Delivered instantly by SMS.</p>
+      <p>Pay once to access today's selections for <strong><span id="payHours">24</span> hours</strong>. The pass link is delivered by SMS.</p>
     </div>
 
     <!-- PAY STATE -->
     <div id="payStatePay">
       <div class="pay-price-line">
-        <span class="pay-price" id="payPrice">UGX 1,000</span>
+        <span class="pay-price" id="payPrice">UGX 2,000</span>
         <span class="pay-price-sub">One-time payment</span>
+      </div>
+
+      <div class="pay-region-group">
+        <label class="pay-region-label">Select Region</label>
+        <div class="pay-region-tabs">
+          <button type="button" class="pay-region-tab active" data-region="ug">Uganda</button>
+          <button type="button" class="pay-region-tab" data-region="intl">International</button>
+        </div>
       </div>
 
       <div class="pay-input-group">
         <label for="payPhone">Phone number</label>
         <input type="tel" id="payPhone" placeholder="0772 123 456" maxlength="16" autocomplete="tel" inputmode="tel">
-        <div class="pay-input-hint">Ugandan MTN or Airtel number. The pass link is sent here by SMS.</div>
+        <div class="pay-input-hint" id="payPhoneHint">Ugandan MTN or Airtel number. The pass link is sent here by SMS.</div>
       </div>
 
       <button class="btn btn-red pay-cta" id="payBtn" type="button">
-        Pay <span id="payBtnAmount">UGX 1,000</span> Now
+        Pay <span id="payBtnAmount">UGX 2,000</span> Now
       </button>
 
       <div id="payAlert" class="pay-alert hidden"></div>
@@ -553,14 +567,6 @@ footer a:hover{color:var(--red)}
   </div>
 </div>
 
-<nav class="bottom-nav">
-  <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i><span>Home</span></a>
-  <a href="#predictions" class="nav-item"><i class="fa-solid fa-futbol"></i><span>Predictions</span></a>
-  <a href="#pricing" class="nav-item"><i class="fa-solid fa-tags"></i><span>Pricing</span></a>
-  <a href="#tracker" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Tracker</span></a>
-  <a href="/signin.html" id="navAccount" class="nav-item"><i class="fa-solid fa-user"></i><span>Account</span></a>
-</nav>
-
 <footer><div class="wrap">
   <p>
     <a href="/terms-policy.html">Terms &amp; Policy</a> &middot;
@@ -587,7 +593,7 @@ const auth = getAuth(app);
 const PASS_API = '/api/pass';
 
 /* =========================================================
-   PAYMENT FLOW (public daily pass — 1000 UGX)
+   PAYMENT FLOW & REGIONAL PRICING
    ========================================================= */
 const payModal = document.getElementById('payModal');
 const payClose = document.getElementById('payClose');
@@ -595,18 +601,26 @@ const payStatePay = document.getElementById('payStatePay');
 const payStateVerify = document.getElementById('payStateVerify');
 const payStateDone = document.getElementById('payStateDone');
 const payPhone = document.getElementById('payPhone');
+const payPhoneHint = document.getElementById('payPhoneHint');
 const payBtn = document.getElementById('payBtn');
 const payAlert = document.getElementById('payAlert');
 const payPrice = document.getElementById('payPrice');
 const payBtnAmount = document.getElementById('payBtnAmount');
 const payHours = document.getElementById('payHours');
 const payDisclaimer = document.getElementById('payDisclaimer');
+const dailyPriceDisplay = document.getElementById('dailyPriceDisplay');
 
-let passInfo = { price: 1000, pass_hours: 24, disclaimer: '18+ only. Betting involves risk.' };
+let passInfo = { price_ug: 2000, price_usd: 1.0, price: 2000, pass_hours: 24, disclaimer: '18+ only. Betting involves risk.' };
+let payRegion = 'ug';
 let pollingActive = false;
 
-function fmtUGX(n) {
-  return 'UGX ' + Number(n || 0).toLocaleString('en-US');
+function fmtPrice(region) {
+  if (region === 'intl') {
+    const usd = Number(passInfo.price_usd != null ? passInfo.price_usd : 1.0);
+    return 'USD ' + usd.toFixed(2);
+  }
+  const ugx = Number(passInfo.price_ug != null ? passInfo.price_ug : (passInfo.price || 2000));
+  return 'UGX ' + ugx.toLocaleString('en-US');
 }
 
 function showPayAlert(msg, kind) {
@@ -646,29 +660,83 @@ function normalizePhone(input) {
   return /^7\d{8}$/.test(d) ? d : null;
 }
 
+function normalizeIntlPhone(input) {
+  let d = String(input || '').replace(/\D/g, '');
+  if (d.startsWith('00')) d = d.slice(2);
+  if (d.startsWith('0')) return null;
+  if (d.length >= 8 && d.length <= 15) return d;
+  return null;
+}
+
+function getPhoneForRegion(raw, region) {
+  if (region === 'intl') {
+    return normalizeIntlPhone(raw);
+  }
+  return normalizePhone(raw);
+}
+
+function updateModalForRegion() {
+  const currentPriceStr = fmtPrice(payRegion);
+  payPrice.textContent = currentPriceStr;
+  payBtnAmount.textContent = currentPriceStr;
+  hidePayAlert();
+
+  if (payRegion === 'intl') {
+    payPhone.placeholder = '+1 415 555 0123';
+    payPhone.maxLength = 20;
+    payPhoneHint.textContent = 'Include your country code. The pass link is sent here by SMS. Delivery depends on your network.';
+  } else {
+    payPhone.placeholder = '0772 123 456';
+    payPhone.maxLength = 16;
+    payPhoneHint.textContent = 'Ugandan MTN or Airtel number. The pass link is sent here by SMS.';
+  }
+}
+
+document.querySelectorAll('.pay-region-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.pay-region-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    payRegion = tab.getAttribute('data-region');
+    updateModalForRegion();
+  });
+});
+
 async function loadPassInfo() {
   try {
     const res = await fetch(PASS_API + '/info');
     if (!res.ok) throw new Error('info failed');
     const data = await res.json();
-    if (data && typeof data.price !== 'undefined') {
-      passInfo.price = Number(data.price);
-      passInfo.pass_hours = Number(data.pass_hours);
+    if (data) {
+      if (typeof data.price_ug !== 'undefined') passInfo.price_ug = Number(data.price_ug);
+      if (typeof data.price_usd !== 'undefined') passInfo.price_usd = Number(data.price_usd);
+      if (typeof data.price !== 'undefined') {
+        passInfo.price = Number(data.price);
+        if (typeof data.price_ug === 'undefined') passInfo.price_ug = Number(data.price);
+      }
+      if (typeof data.pass_hours !== 'undefined') passInfo.pass_hours = Number(data.pass_hours);
       if (data.disclaimer) passInfo.disclaimer = data.disclaimer;
     }
   } catch (e) {}
-  payPrice.textContent = fmtUGX(passInfo.price);
-  payBtnAmount.textContent = fmtUGX(passInfo.price);
+
+  if (dailyPriceDisplay) {
+    dailyPriceDisplay.textContent = 'UGX ' + Number(passInfo.price_ug || 2000).toLocaleString('en-US');
+  }
   payHours.textContent = String(passInfo.pass_hours);
   if (payDisclaimer) payDisclaimer.textContent = passInfo.disclaimer;
+  updateModalForRegion();
 }
 
 payBtn.addEventListener('click', async () => {
   hidePayAlert();
   const raw = payPhone.value.trim();
-  const phone = normalizePhone(raw);
+  const phone = getPhoneForRegion(raw, payRegion);
+  
   if (!phone) {
-    showPayAlert('Enter a valid Ugandan number, e.g. 0772123456.');
+    if (payRegion === 'intl') {
+      showPayAlert('Enter a valid number with country code, e.g. +1 415 555 0123.');
+    } else {
+      showPayAlert('Enter a valid Ugandan number, e.g. 0772123456.');
+    }
     payPhone.focus();
     return;
   }
@@ -681,7 +749,7 @@ payBtn.addEventListener('click', async () => {
     const res = await fetch(PASS_API + '/start', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ phone })
+      body: JSON.stringify({ phone, region: payRegion })
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.redirect_url) {
@@ -699,7 +767,7 @@ document.getElementById('resendLink').addEventListener('click', async (e) => {
   e.preventDefault();
   hidePayAlert();
   const raw = payPhone.value.trim();
-  const phone = normalizePhone(raw);
+  const phone = getPhoneForRegion(raw, payRegion);
   if (!phone) {
     showPayAlert('Enter the phone number you paid with, then tap Resend.');
     payPhone.focus();
@@ -709,7 +777,7 @@ document.getElementById('resendLink').addEventListener('click', async (e) => {
     const res = await fetch(PASS_API + '/resend', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ phone })
+      body: JSON.stringify({ phone, region: payRegion })
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || 'Could not send link.');
@@ -762,6 +830,10 @@ async function initPaymentModal() {
   const orderId = params.get('pass_order');
   if (orderId) {
     pollOrderStatus(orderId);
+  } else {
+    // Automatically trigger payment popup on initial page load if no pass_order redirect is present
+    setPayState('pay');
+    openPayModal();
   }
 }
 
@@ -1067,5 +1139,6 @@ updatePredHeading('today');
 fetchPredData('today');
 initPaymentModal();
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"71d3db8a576a464d96de6bbd6617603c","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
