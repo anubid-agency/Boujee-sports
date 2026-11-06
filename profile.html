@@ -504,38 +504,15 @@
     <section id="paymentSection" class="section hidden">
       <div class="section-header"><i class="fa-solid fa-credit-card"></i> Submit Payment</div>
       <div class="payment-form">
-        <p style="color:#9a9a9a;margin-bottom:20px;">Send your payment via mobile money and submit the details below. Your membership will be activated after review.</p>
-        
+        <p style="color:#9a9a9a;margin-bottom:20px;">Premium is UGX 40,000 for 30 days. Enter your mobile money number and pay securely with Pesapal.</p>
         <div class="form-group">
-          <label for="paymentNetwork">Payment Network</label>
-          <select id="paymentNetwork">
-            <option value="">Select network</option>
-            <option value="mtn">MTN Mobile Money</option>
-            <option value="airtel">Airtel Money</option>
-            <option value="vodafone">Vodafone Cash</option>
-          </select>
+          <label for="paymentPhone">Phone Number</label>
+          <input type="tel" id="paymentPhone" placeholder="e.g. 0700 000 000">
         </div>
-        
-        <div class="form-group">
-          <label for="paymentPhone">Sender Phone Number</label>
-          <input type="tel" id="paymentPhone" placeholder="e.g. +256 700 000 000">
-        </div>
-        
-        <div class="form-group">
-          <label for="paymentAmount">Amount Claimed (UGX)</label>
-          <input type="number" id="paymentAmount" placeholder="e.g. 50000" min="0" step="1000">
-        </div>
-        
-        <div class="form-group">
-          <label for="paymentSmsText">SMS Confirmation Text</label>
-          <textarea id="paymentSmsText" rows="4" placeholder="Paste the full SMS confirmation message from your mobile money provider here"></textarea>
-        </div>
-        
         <button id="submitPaymentBtn" class="btn">
-          <span class="btn-text">Submit Payment Proof</span>
+          <span class="btn-text">Pay UGX 40,000</span>
           <span class="spinner"></span>
         </button>
-        
         <div id="paymentAlert" class="alert" style="margin-top:16px;"></div>
       </div>
     </section>
@@ -796,49 +773,33 @@
     const submitPaymentBtn = document.getElementById('submitPaymentBtn');
     submitPaymentBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      
-      const network = document.getElementById('paymentNetwork').value;
-      const smsText = document.getElementById('paymentSmsText').value.trim();
-      const claimedAmount = document.getElementById('paymentAmount').value;
-      
-      if (!network || !smsText || !claimedAmount) {
-        showAlert('paymentAlert', 'Please fill in all required fields.', 'error');
+      const phone = document.getElementById('paymentPhone').value.trim();
+      if (!phone) {
+        showAlert('paymentAlert', 'Please enter your phone number.', 'error');
         return;
       }
-      
-      // Show loading
       submitPaymentBtn.disabled = true;
       submitPaymentBtn.querySelector('.spinner').style.display = 'block';
       submitPaymentBtn.querySelector('.btn-text').style.display = 'none';
-      
       try {
         const idToken = await currentUser.getIdToken();
         const res = await fetch('/api/payments/submit', {
           method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${idToken}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ network, smsText, claimedAmount: parseFloat(claimedAmount) })
+          headers: { 'Authorization': `Bearer ${idToken}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone })
         });
-        
-        if (res.ok) {
-          showAlert('paymentAlert', 'Payment submitted successfully! Your membership will be activated after review.', 'success');
-          document.getElementById('paymentNetwork').value = '';
-          document.getElementById('paymentSmsText').value = '';
-          document.getElementById('paymentAmount').value = '';
-        } else {
-          const data = await res.json();
-          showAlert('paymentAlert', data.error || 'Failed to submit payment.', 'error');
+        const data = await res.json();
+        if (res.ok && data.redirectUrl) {
+          window.location.href = data.redirectUrl;
+          return;
         }
+        showAlert('paymentAlert', data.error || 'Failed to start payment.', 'error');
       } catch (error) {
-        console.error('Error submitting payment:', error);
         showAlert('paymentAlert', 'Network error. Please try again.', 'error');
-      } finally {
-        submitPaymentBtn.disabled = false;
-        submitPaymentBtn.querySelector('.spinner').style.display = 'none';
-        submitPaymentBtn.querySelector('.btn-text').style.display = 'inline';
       }
+      submitPaymentBtn.disabled = false;
+      submitPaymentBtn.querySelector('.spinner').style.display = 'none';
+      submitPaymentBtn.querySelector('.btn-text').style.display = 'inline';
     });
 
     // Submit testimony
@@ -950,5 +911,6 @@
       }
     }
   </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"71d3db8a576a464d96de6bbd6617603c","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
-  </html>
+</html>
